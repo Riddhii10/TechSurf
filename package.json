@@ -13,16 +13,22 @@
   "dependencies": {
     "@contentstack/live-preview-utils": "^1.2.1",
     "@contentstack/utils": "^1.2.0",
+    "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/sortable": "^8.0.0",
     "@textea/json-viewer": "^2.14.1",
     "contentstack": "^3.16.1",
     "html-react-parser": "^3.0.12",
     "moment": "^2.29.4",
+    "nanoid": "^5.0.7",
     "next": "^12.3.1",
     "next-pwa": "^5.6.0",
     "nprogress": "^0.2.0",
     "react": "^18.2.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
-    "react-loading-skeleton": "^3.2.0"
+    "react-loading-skeleton": "^3.2.0",
+    "use-immer": "^0.10.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.18",

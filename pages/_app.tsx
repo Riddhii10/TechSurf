@@ -11,6 +11,8 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import '@contentstack/live-preview-utils/dist/main.css';
 import { Props } from "../typescript/pages";
 
+import { DndContext } from '@dnd-kit/core';
+
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -41,7 +43,7 @@ function MyApp(props: Props) {
   };
   const blogList: any = posts?.concat(archivePost);
   return (
-    <>
+    <DndContext >
       <Head>
         <meta
           name='application-name'
@@ -57,7 +59,7 @@ function MyApp(props: Props) {
         <title>Contentstack-Nextjs-Starter-App</title>
         {page?.seo && page.seo.enable_search_indexing && metaData(page.seo)}
       </Head>
-      <Layout
+      {/* <Layout
         header={header}
         footer={footer}
         page={page}
@@ -66,8 +68,9 @@ function MyApp(props: Props) {
         entries={entries}
       >
         <Component {...pageProps} />
-      </Layout>
-    </>
+      </Layout> */}
+      <Component {...pageProps}/>
+    </DndContext>
   );
 }
 
