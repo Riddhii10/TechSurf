@@ -43,7 +43,8 @@ function MyApp(props: Props) {
   };
   const blogList: any = posts?.concat(archivePost);
   return (
-    <DndContext >
+    // <DndContext >
+    <>
       <Head>
         <meta
           name='application-name'
@@ -59,7 +60,7 @@ function MyApp(props: Props) {
         <title>Contentstack-Nextjs-Starter-App</title>
         {page?.seo && page.seo.enable_search_indexing && metaData(page.seo)}
       </Head>
-      {/* <Layout
+      <Layout
         header={header}
         footer={footer}
         page={page}
@@ -68,9 +69,8 @@ function MyApp(props: Props) {
         entries={entries}
       >
         <Component {...pageProps} />
-      </Layout> */}
-      <Component {...pageProps}/>
-    </DndContext>
+      </Layout>
+    </>
   );
 }
 

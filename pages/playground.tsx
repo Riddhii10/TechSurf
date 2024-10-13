@@ -11,10 +11,11 @@ import {
 // import Canvas, { Field } from "./canvas";
 // import Sidebar, { SidebarField } from "./sidebar";
 // import { FieldType, fields } from "./fields"; // Import fields type
-import Canvas, {Field} from "../components/Canvas";
-import Sidebar, {SidebarField} from "../components/sidebar";
-import { FieldType,fields } from "../components/fields";
+import Canvas, {Field} from "../components/drag_and_drop/canvas";
+import Sidebar, {SidebarField} from "../components/drag_and_drop/sidebar";
+import { FieldType,fields } from "../components/drag_and_drop/fields";
 import styles from '../styles/playground.module.css'
+import Trash from "../components/drag_and_drop/trash";
 
 
 // Define the structure of your data state
@@ -88,6 +89,7 @@ export default function App() {
 
   // Handle drag over event
   const handleDragOver = (e: any) => {
+    console.log(e,"over");
     const { active, over } = e;
     const activeData = getData(active);
 
@@ -131,7 +133,7 @@ export default function App() {
   // Handle drag end event
   const handleDragEnd = (e: any) => {
     const { over } = e;
-
+    
     if (!over) {
       cleanUp();
       updateData((draft: DataState) => {
@@ -176,6 +178,7 @@ export default function App() {
           >
             <Canvas fields={fields} />
           </SortableContext>
+          {/* <Trash /> */}
           <DragOverlay>
             {activeSidebarField ? (
               <SidebarField overlay field={activeSidebarField} />

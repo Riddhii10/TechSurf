@@ -4,8 +4,10 @@ import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 
 import { renderers } from "./fields";
-import styles from '../styles/playground.module.css'
+// import styles from '.../styles/playground.module.css'
+import styles from '../../styles/playground.module.css'
 
+// C:\Users\Acer\Desktop\project_works\test2\styles\playground.module.css
 // Define types for the field and its props
 type FieldType = {
   id: string;
@@ -56,7 +58,7 @@ interface SortableFieldProps {
 const SortableField: React.FC<SortableFieldProps> = (props) => {
   const { id, index, field } = props;
 
-  const { attributes, listeners, setNodeRef, transform, transition } =
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({
       id,
       data: {
@@ -69,6 +71,8 @@ const SortableField: React.FC<SortableFieldProps> = (props) => {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    opacity: isDragging? 0.5:1,
+    cursor: 'grab'
   };
 
   return (
