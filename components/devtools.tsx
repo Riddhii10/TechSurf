@@ -91,7 +91,7 @@ const DevTools = ({ response }: any) => {
                     defaultInspectDepth={1}
                     rootName="response"
                     enableClipboard={false}
-                    style={{ color: '#C8501E' }}
+                    style={{ color: '#C8401E' }}
                   />
                 )}
               </pre>

@@ -7,7 +7,7 @@ const Sitemap = () => {
 
 export const getServerSideProps = async ({ res }: {res: Context}) => {
 
-  const baseUrl = process.env.NEXT_PUBLIC_HOSTED_URL || 'http://localhost:3000';
+  const baseUrl = process.env.NEXT_PUBLIC_HOSTED_URL || 'http://localhost:3000/';
 
   let pages: Pages = await getAllEntries();
   let posts: PostPage = await getBlogListRes();

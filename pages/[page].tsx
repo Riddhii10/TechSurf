@@ -13,6 +13,7 @@ export default function Page(props: Props) {
     try {
       const entryRes = await getPageRes(entryUrl);
       if (!entryRes) throw new Error('Status code 404');
+      console.log('pagesss');
       setEntry(entryRes);
     } catch (error) {
       console.error(error);
@@ -24,12 +25,14 @@ export default function Page(props: Props) {
   }, [page]);
 
   return getEntry.page_components ? (
+    <>hekek
     <RenderComponents
       pageComponents={getEntry.page_components}
       contentTypeUid='page'
       entryUid={getEntry.uid}
       locale={getEntry.locale}
     />
+    </>
   ) : (
     <Skeleton count={3} height={300} />
   );
@@ -43,7 +46,7 @@ export async function getServerSideProps({params}: any) {
       return {
         props: {
           entryUrl: entryUrl,
-          page: entryRes,
+          page: entryRes??null,
         },
       };
 

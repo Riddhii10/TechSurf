@@ -73,6 +73,7 @@ function MyApp(props: Props) {
 
 MyApp.getInitialProps = async (appContext: any) => {
   const appProps = await App.getInitialProps(appContext);
+  console.log(appProps,"this are my props");
   const header = await getHeaderRes();
   const footer = await getFooterRes();
   const entries = await getAllEntries();

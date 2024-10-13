@@ -33,8 +33,10 @@ export default function Footer({ footer, entries }: {footer: FooterProps, entrie
     try {
       if (footer && entries) {
         const footerRes = await getFooterRes();
-        const newfooter = buildNavigation(entries, footerRes);
-        setFooter(newfooter);
+        console.log(footerRes);
+        // const newfooter = buildNavigation(entries, footerRes);
+        // console.log(newfooter);
+        setFooter(footerRes);
       }
     } catch (error) {
       console.error(error);
@@ -87,7 +89,7 @@ export default function Footer({ footer, entries }: {footer: FooterProps, entrie
           </nav>
         </div>
         <div className='col-quarter social-link'>
-          <div className='social-nav'>
+          <div className='socia-nav'>
             {footerData ? (
               footerData.social?.social_share.map((social) => (
                 <a

@@ -8,22 +8,24 @@ const { publicRuntimeConfig } = getConfig();
 const envConfig = process.env.CONTENTSTACK_API_KEY
   ? process.env
   : publicRuntimeConfig;
-
+console.log(envConfig);
+console.log(publicRuntimeConfig);
 const Stack = contentstack.Stack({
   api_key: envConfig.CONTENTSTACK_API_KEY
     ? envConfig.CONTENTSTACK_API_KEY
     : envConfig.NEXT_PUBLIC_CONTENTSTACK_API_KEY,
   delivery_token: envConfig.CONTENTSTACK_DELIVERY_TOKEN,
   environment: envConfig.CONTENTSTACK_ENVIRONMENT,
-  region: envConfig.CONTENTSTACK_REGION ? envConfig.CONTENTSTACK_REGION : 'us',
+  region: envConfig.CONTENTSTACK_REGION ? envConfig.CONTENTSTACK_REGION : 'EU',
   live_preview: {
     enable: true,
     management_token: envConfig.CONTENTSTACK_MANAGEMENT_TOKEN,
     host: envConfig.CONTENTSTACK_API_HOST,
   },
 });
-
+console.log(Stack);
 if (envConfig.CONTENTSTACK_API_HOST) {
+  console.log(envConfig.CONTENTSTACK_API_HOST,"checkthis");
   Stack.setHost(envConfig.CONTENTSTACK_API_HOST);
 }
 

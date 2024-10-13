@@ -17,6 +17,7 @@ export default function Home(props: Props) {
       if (!entryRes) throw new Error('Status code 404');
       setEntry(entryRes);
     } catch (error) {
+      console.log(error);
       console.error(error);
     }
   }
@@ -33,7 +34,9 @@ export default function Home(props: Props) {
       locale={getEntry.locale}
     />
   ) : (
+    <>
     <Skeleton count={3} height={300} />
+    </>
   );
 }
 
@@ -43,7 +46,7 @@ export async function getServerSideProps(context: Context) {
     return {
       props: {
         entryUrl: context.resolvedUrl,
-        page: entryRes,
+        page: entryRes??null,
       },
     };
   } catch (error) {

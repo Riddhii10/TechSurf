@@ -6,7 +6,8 @@ const { publicRuntimeConfig } = getConfig();
 const envConfig = process.env.CONTENTSTACK_API_KEY
   ? process.env
   : publicRuntimeConfig;
-
+console.log(envConfig);
+console.log(publicRuntimeConfig);
 const liveEdit = envConfig.CONTENTSTACK_LIVE_EDIT_TAGS === 'true';
 
 export const getHeaderRes = async () => {
@@ -42,6 +43,7 @@ export const getAllEntries = async () => {
 };
 
 export const getPageRes = async (entryUrl) => {
+  console.log(entryUrl);
   const response = await Stack.getEntryByUrl({
     contentTypeUid: 'page',
     entryUrl,
@@ -53,6 +55,8 @@ export const getPageRes = async (entryUrl) => {
     ],
   });
   liveEdit && addEditableTags(response[0], 'page', true);
+
+  console.log(response[0]);
   return response[0];
 };
 
@@ -64,6 +68,7 @@ export const getBlogListRes = async () => {
   });
   liveEdit &&
     response[0].forEach((entry) => addEditableTags(entry, 'blog_post', true));
+  console.log(response[0]);
   return response[0];
 };
 
@@ -75,5 +80,6 @@ export const getBlogPostRes = async (entryUrl) => {
     jsonRtePath: ['body', 'related_post.body'],
   });
   liveEdit && addEditableTags(response[0], 'blog_post', true);
+  console.log(response[0]);
   return response[0];
 };
