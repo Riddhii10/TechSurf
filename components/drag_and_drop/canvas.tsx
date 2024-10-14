@@ -39,7 +39,7 @@ export const Field: React.FC<FieldProps> = (props) => {
 
   let className = "canvas-field";
   if (overlay) {
-    className += " overlay";
+    className += ` ${styles.dragOverlay}`;
   }
 
   return (
@@ -72,11 +72,13 @@ const SortableField: React.FC<SortableFieldProps> = (props) => {
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging? 0.5:1,
-    cursor: 'grab'
+    touchAction : 'none',
+    // cursor: 'grab',
+    
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={styles.sortableField}>
       <Field field={field} />
     </div>
   );
@@ -104,7 +106,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
 
   return (
     <div ref={setNodeRef} className={styles.canvas}>
-      <div className={`${styles['canvas-field']}`}>
+      <div className={`${styles['canvas-fields-container']}`}>
         {fields?.map((f, i) => (
           <SortableField key={f.id} id={f.id} field={f} index={i} />
         ))}
