@@ -20,6 +20,7 @@ interface FieldProps {
   overlay?: boolean; // Optional prop
   [key: string]: any; // Allow any other props
   onSelect?: (field: FieldType) => void;
+  isSelected?: boolean;
 }
 
 function getRenderer(type: string) {
@@ -33,7 +34,7 @@ function getRenderer(type: string) {
 }
 
 export const Field: React.FC<FieldProps> = (props) => {
-  const { field, overlay, onSelect, ...rest } = props;
+  const { field, overlay, isSelected, onSelect, ...rest } = props;
   const { type } = field;
 
   const Component = getRenderer(type);
@@ -42,8 +43,11 @@ export const Field: React.FC<FieldProps> = (props) => {
   if (overlay) {
     className += ` ${styles.dragOverlay}`;
   }
+  if(isSelected){
+    className += ` ${styles.selectedField}`;
+  }
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (e: React.PointerEvent) => {
     console.log('clicked');
     console.log(e);
     e.stopPropagation();
@@ -64,10 +68,11 @@ interface SortableFieldProps {
   index: number;
   field: FieldType;
   onSelect: (field: FieldType) => void;
+  isSelected: boolean;
 }
 
 const SortableField: React.FC<SortableFieldProps> = (props) => {
-  const { id, index, field, onSelect } = props;
+  const { id, index, field, onSelect, isSelected } = props;
   // const [isDragging, setIsDragging] = useState(false);
 
   const {
@@ -99,9 +104,8 @@ const SortableField: React.FC<SortableFieldProps> = (props) => {
       {...attributes} 
       {...listeners}
       className={styles.sortableField}
-      onPointerDown={()=>{console.log('clicked');}}
     >
-      <Field field={field} onSelect={onSelect}/>
+      <Field field={field} onSelect={onSelect} isSelected={isSelected}/>
     </div>
   );
 };
@@ -113,6 +117,7 @@ interface CanvasProps {
 
 const Canvas: React.FC<CanvasProps> = (props) => {
   const { fields, onFieldSelect } = props;
+  const [selectedField, setSelectedField] = useState<string | null>(null);
 
   const { setNodeRef } = useDroppable({
     id: "canvas_droppable",
@@ -122,6 +127,10 @@ const Canvas: React.FC<CanvasProps> = (props) => {
     },
   });
 
+  const handleFieldSelect = (field: FieldType) => {
+    setSelectedField(field.id); // Update selected field
+    onFieldSelect(field);
+  };
 //   const style = {
 //     transform: CSS.Transform.toString(transform),
 //     transition,
@@ -131,7 +140,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
     <div ref={setNodeRef} className={styles.canvas}>
       <div className={`${styles['canvas-fields-container']}`}>
         {fields?.map((f, i) => (
-          <SortableField key={f.id} id={f.id} field={f} index={i} onSelect={onFieldSelect}/>
+          <SortableField key={f.id} id={f.id} field={f} index={i} onSelect={handleFieldSelect} isSelected={f.id==selectedField}/>
         ))}
       </div>
     </div>
