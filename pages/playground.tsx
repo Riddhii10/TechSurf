@@ -157,9 +157,10 @@ import {
 // import { FieldType, fields } from "./fields"; // Import fields type
 import Canvas, {Field} from "../components/drag_and_drop/canvas";
 import Sidebar, {SidebarField} from "../components/drag_and_drop/sidebar";
-import { FieldType,fields } from "../components/drag_and_drop/fields";
+import { FieldType,fields as initialFields } from "../components/drag_and_drop/fields";
 import styles from '../styles/playground.module.css'
 import Trash from "../components/drag_and_drop/trash";
+import RightPanel from "../components/drag_and_drop/rightpanel";
 
 
 // Define the structure of your data state
@@ -177,7 +178,7 @@ function createSpacer({ id }: { id: string }): FieldType {
   return {
     id,
     type: "spacer",
-    title: "spacer",
+    title: "spacer"
   };
 }
 
@@ -189,10 +190,14 @@ export default function App() {
   const currentDragFieldRef = useRef<FieldType | null>(null);
   const [activeSidebarField, setActiveSidebarField] = useState<FieldType | null>(null);
   const [activeField, setActiveField] = useState<FieldType | null>(null);
+  const [selectedField, setSelectedField] = useState<FieldType | null>(null);
+
+  
+
 
   // Use useImmer with a defined type for the state
   const [data, updateData] = useImmer<DataState>({
-    fields: [],
+    fields: initialFields,
   });
 
   // Cleanup function to reset states
@@ -210,7 +215,7 @@ export default function App() {
 
     if (activeData.fromSidebar) {
       const { field } = activeData;
-      const { type,title } = field;
+      const { type,title, content, placeholder, text } = field;
       setActiveSidebarField(field);
       currentDragFieldRef.current = {
         id: active.id,
@@ -218,6 +223,9 @@ export default function App() {
         name: `${type}${data.fields.length + 1}`,
         title,
         parent: null,
+        content: content,
+        placeholder: placeholder,
+        text: text
       };
       return;
     }
@@ -300,6 +308,23 @@ export default function App() {
 
     setSidebarFieldsRegenKey(Date.now());
     cleanUp();
+    setSelectedField(null);
+  };
+
+
+  const handleFieldSelect = (field: FieldType) => {
+    console.log(field);
+    setSelectedField(field);
+  };
+
+  const handleUpdateField = (updatedField: FieldType) => {
+    updateData((draft: DataState) => {
+      const index = draft.fields.findIndex(f => f.id === updatedField.id);
+      if (index !== -1) {
+        draft.fields[index] = updatedField;
+      }
+    });
+    setSelectedField(updatedField);
   };
 
   const { fields } = data;
@@ -320,15 +345,17 @@ export default function App() {
             strategy={verticalListSortingStrategy}
             items={fields.map((f:FieldType) => f.id)}
           >
-            <Canvas fields={fields} />
+            <Canvas fields={fields} onFieldSelect={handleFieldSelect}/>
           </SortableContext>
           {/* <Trash /> */}
+          
           <DragOverlay>
             {activeSidebarField ? (
               <SidebarField overlay field={activeSidebarField} />
             ) : null}
             {activeField ? <Field overlay field={activeField} /> : null}
           </DragOverlay>
+          <RightPanel selectedField={selectedField} onUpdateField={handleUpdateField} />
         </DndContext>
       </div>
     </div>

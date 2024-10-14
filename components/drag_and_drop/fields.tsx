@@ -1,15 +1,16 @@
-import React from "react";
+import React from 'react';
 
-// Define the FieldType interface
 export interface FieldType {
-    id: string;  // Ensure this property is present
-    title: string;
-    type: string;
-    name?: string; // Optional property
-    parent?: string | null; // Optional property
-  }
+  id: string;
+  title: string;
+  type: string;
+  name?: string;
+  parent?: string | null;
+  placeholder?: string;
+  text?: string;
+  content?: string;
+}
 
-// These will be available from the sidebar
 export const fields: FieldType[] = [
   {
     id: "input",
@@ -38,13 +39,9 @@ export const fields: FieldType[] = [
   },
 ];
 
-// Define the type for renderers
-type Renderer = () => JSX.Element;
-
-// These define how we render the field
-export const renderers: Record<string, Renderer> = {
-  input: () => <input type="text" placeholder="This is a text input" />,
-  textarea: () => <textarea rows={5} placeholder="This is a text area" />,
+export const renderers: Record<string, React.FC<FieldType>> = {
+  input: (props) => <input type="text" placeholder={props.placeholder || "This is a text input"} />,
+  textarea: (props) => <textarea rows={5} placeholder={props.placeholder || "This is a text area"}>{props.content}</textarea>,
   select: () => (
     <select>
       <option value="1">1</option>
@@ -52,18 +49,6 @@ export const renderers: Record<string, Renderer> = {
       <option value="3">3</option>
     </select>
   ),
-  text: () => (
-    <p>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industry's standard dummy text ever since the
-      1500s, when an unknown printer took a galley of type and scrambled it to
-      make a type specimen book. It has survived not only five centuries, but
-      also the leap into electronic typesetting, remaining essentially
-      unchanged. It was popularised in the 1960s with the release of Letraset
-      sheets containing Lorem Ipsum passages, and more recently with desktop
-      publishing software like Aldus PageMaker including versions of Lorem
-      Ipsum.
-    </p>
-  ),
-  button: () => <button>Button</button>,
+  text: (props) => <p>{props.content || "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}</p>,
+  button: (props) => <button>{props.text || "Button"}</button>,
 };
