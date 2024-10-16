@@ -114,4 +114,22 @@ export const getContentTypesRes = async ({ limit = 10, skip = 0, search } = {}) 
   }
 };
 
+export const getSpecificContentTypeRes = async (content_type_uid) =>{
+  try{
+    const response = await axios.get(`${BASE_URL}/v3/content_types/${content_type_uid}/`, {
+      headers: {
+        api_key: API_KEY,
+        access_token: DELIVERY_TOKEN,
+        authorization: MANAGEMENT_TOKEN
+      },
+    });
+
+    return response.data.content_type;
+  }
+  catch (error){
+    console.error('Error fetching specific content type:', error);
+    throw error;
+  }
+};
+
 
