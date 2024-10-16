@@ -111,14 +111,6 @@ export default function Header({ header, entries }: {header: HeaderProps, entrie
             )}
           </ul>
         </nav>
-
-        <div className='json-preview'>
-          <Tooltip content='JSON Preview' direction='top' dynamic={false} delay={200} status={0}>
-            <span data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
-              <img src='/json.svg' alt='JSON Preview icon' />
-            </span>
-          </Tooltip>
-        </div>
       </div>
     </header>
   );

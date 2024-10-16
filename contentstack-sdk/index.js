@@ -111,4 +111,15 @@ export default {
       );
     });
   },
+  
+  getContentTypesRes ({ limit = 10, skip = 0 }) {
+    try {
+      const response = Stack.getContentTypes({ limit, skip });
+      console.log('Fetched Content Types:', response.content_types);
+      return response.content_types;
+    } catch (error) {
+      console.error('Error fetching content types:', error);
+      throw error;
+    }
+  },
 };

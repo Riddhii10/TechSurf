@@ -1,6 +1,7 @@
 import Stack from '../contentstack-sdk';
 import { addEditableTags } from '@contentstack/utils';
 import getConfig from 'next/config';
+import axios from 'axios';
 
 const { publicRuntimeConfig } = getConfig();
 const envConfig = process.env.CONTENTSTACK_API_KEY
@@ -9,6 +10,13 @@ const envConfig = process.env.CONTENTSTACK_API_KEY
 console.log(envConfig);
 console.log(publicRuntimeConfig);
 const liveEdit = envConfig.CONTENTSTACK_LIVE_EDIT_TAGS === 'true';
+const BASE_URL = "https://"+envConfig.CONTENTSTACK_API_HOST || 'https://eu-api.contentstack.com';
+
+const API_KEY = envConfig.CONTENTSTACK_API_KEY || envConfig.NEXT_PUBLIC_CONTENTSTACK_API_KEY;
+const DELIVERY_TOKEN = envConfig.CONTENTSTACK_DELIVERY_TOKEN;
+const ENVIRONMENT = envConfig.CONTENTSTACK_ENVIRONMENT;
+const MANAGEMENT_TOKEN = envConfig.CONTENTSTACK_MANAGEMENT_TOKEN
+
 
 export const getHeaderRes = async () => {
   const response = await Stack.getEntry({
@@ -83,3 +91,27 @@ export const getBlogPostRes = async (entryUrl) => {
   console.log(response[0]);
   return response[0];
 };
+
+export const getContentTypesRes = async ({ limit = 10, skip = 0, search } = {}) => {
+  console.log(BASE_URL);
+  try {
+    const response = await axios.get(`${BASE_URL}/v3/content_types`, {
+      headers: {
+        api_key: API_KEY,
+        access_token: DELIVERY_TOKEN,
+        authorization: MANAGEMENT_TOKEN
+      },
+    });
+
+    console.log('Fetched Content Types:', response.data.content_types);
+    return response.data.content_types.map(contentType => ({
+      title: contentType.title,
+      uid: contentType.uid,
+    }));
+  } catch (error) {
+    console.error('Error fetching content types:', error);
+    throw error;
+  }
+};
+
+
