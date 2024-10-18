@@ -1,6 +1,6 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { getContentTypesRes } from '../../helper';
-import Link from 'next/link';
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { getContentTypesRes } from "../../helper";
+import Link from "next/link";
 type ContentType = {
   title: string;
   uid: string;
@@ -19,12 +19,12 @@ export default function ContentTypesPage({
       {contentTypes && contentTypes.length > 0 ? (
         <ul>
           {contentTypes.map((contentType) => (
-            <Link href={'contenttype/'+contentType.uid}>
-                <a>
+            <Link href={"contenttype/" + contentType.uid}>
+              <a>
                 <li key={contentType.uid}>
-                <strong>{contentType.title}</strong> (UID: {contentType.uid})
+                  <strong>{contentType.title}</strong> (UID: {contentType.uid})
                 </li>
-                </a>
+              </a>
             </Link>
           ))}
         </ul>

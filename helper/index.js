@@ -132,4 +132,20 @@ export const getSpecificContentTypeRes = async (content_type_uid) =>{
   }
 };
 
+export const getSpecificEntry = async (entry_uid) =>{
+  try{
+    const response = await axios.get(`${BASE_URL}/v3/content_types/page/entries/${entry_uid}/`, {
+      headers: {
+        api_key: API_KEY,
+        access_token: DELIVERY_TOKEN,
+        authorization: MANAGEMENT_TOKEN
+      },
+    });
 
+    return response.data.entry;
+  }
+  catch (error){
+    console.error();
+    throw error;
+  }
+};
