@@ -112,6 +112,7 @@ export default {
     });
   },
   
+  //added by me 
   getContentTypesRes ({ limit = 10, skip = 0 }) {
     try {
       const response = Stack.getContentTypes({ limit, skip });

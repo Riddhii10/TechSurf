@@ -92,6 +92,8 @@ export const getBlogPostRes = async (entryUrl) => {
   return response[0];
 };
 
+
+//added by me 
 export const getContentTypesRes = async ({ limit = 10, skip = 0, search } = {}) => {
   console.log(BASE_URL);
   try {

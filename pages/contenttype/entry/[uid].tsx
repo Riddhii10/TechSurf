@@ -1,5 +1,5 @@
-import { GetServerSideProps, GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
-import { getAllEntries, getSpecificEntry } from '../../../helper'; // A function to fetch entry by UID
+import { GetServerSideProps } from 'next';
+import { getSpecificEntry } from '../../../helper'; // A function to fetch entry by UID
 
 interface EntryProps {
   entry: {
@@ -9,57 +9,46 @@ interface EntryProps {
   };
 }
 
-
-
-
-const EntryPage = ({
-  entry
-}: EntryProps) => {
+const EntryPage = ({ entry }: EntryProps) => {
   return (
     <div style={{ padding: '20px' }}>
       <h1>{entry.title}</h1>
       <p>URL: {entry.url}</p>
 
-      {/* Render page components */}
-      {entry.page_components.map((component, index) => (
-        <div key={index} style={{ marginBottom: '20px' }}>
-          {component.hero_banner && (
-            <div
-              style={{
-                backgroundColor: component.hero_banner.bg_color,
-                color: component.hero_banner.text_color,
-                padding: '20px',
-              }}
-            >
-              <h2>{component.hero_banner.banner_title}</h2>
-              <p>{component.hero_banner.banner_description}</p>
-              <a href={component.hero_banner.call_to_action.href}>
-                {component.hero_banner.call_to_action.title}
-              </a>
-            </div>
-          )}
+      {/* Render only the first key-value pair of each component */}
+      {entry.page_components.map((component, index) => {
+        // Extract the first key-value pair
+        const [key, value] = Object.entries(component)[0];
 
-          {component.section_with_buckets && (
-            <div>
-              <h2>{component.section_with_buckets.title_h2}</h2>
-              <p>{component.section_with_buckets.description}</p>
-            </div>
-          )}
-        </div>
-      ))}
+        return (
+          <div key={index} style={{ marginBottom: '20px' }}>
+            <h2>Component: {key}</h2>
+
+            
+            {/* Optionally display some values */}
+            <>
+            {/* {value && typeof value === 'object' && (
+              // <pre style={{ backgroundColor: '#f0f0f0', padding: '10px' }}>
+              //   {JSON.stringify(value, null, 2)}
+              // </pre>
+            )} */}
+            </>
+          </div>
+        );
+      })}
     </div>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) =>{
-    const {uid} = context.query;
-    const entry_page = await getSpecificEntry(uid);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { uid } = context.query;
+  const entry_page = await getSpecificEntry(uid);
 
-    return {
-        props:{
-            entry : entry_page,
-        },
-    };
+  return {
+    props: {
+      entry: entry_page,
+    },
+  };
 };
 
 export default EntryPage;
