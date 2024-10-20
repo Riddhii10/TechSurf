@@ -55,9 +55,6 @@ export default function App() {
   const [activeField, setActiveField] = useState<FieldType | null>(null);
   const [selectedField, setSelectedField] = useState<FieldType | null>(null);
 
-  
-
-
   // Use useImmer with a defined type for the state
   const [data, updateData] = useImmer<DataState>({
     fields: initialFields,

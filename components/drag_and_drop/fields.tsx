@@ -2,9 +2,12 @@ import React from 'react';
 import HeroBanner from '../hero-banner';
 import TeamSection from '../team-section';
 import SectionBucket from '../section-bucket';
+import Section from '../section';
+import CardSection from '../card-section';
+import SectionWithHtmlCode from '../section-with-html-code';
+import BlogSection from '../blog-section';
 
 export interface FieldType {
-  [x: string]: any;
   id: string;
   title: string;
   type: string;
@@ -12,9 +15,10 @@ export interface FieldType {
   parent?: string | null;
   placeholder?: string;
   text?: string;
-  content?: string;
+  content?: any; // Changed to any to accommodate various content types
 }
 
+// Define available field types for the sidebar
 export const fields: FieldType[] = [
   { 
     id: "input",
@@ -37,148 +41,23 @@ export const fields: FieldType[] = [
     title: "Button",
   },
   {
-    id: "textarea",
-    type: "textarea",
-    title: "Text Area",
-  },
+    id: "our_team",
+    type: "our_team",
+    title: "Our Team",
+  }
 ];
 
 export const renderers: Record<string, React.FC<FieldType>> = {
   input: (props) => <input type="text" placeholder={props.placeholder || "This is a text input"} />,
   textarea: (props) => <textarea rows={5} placeholder={props.placeholder || "This is a text area"}>{props.content}</textarea>,
-  select: () => (
-    <select>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-    </select>
-  ),    
-  text: (props) => <p>{props.content || "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}</p>,
+  text: (props) => <p>{props.content || "Lorem Ipsum is simply dummy text"}</p>,
   button: (props) => <button>{props.text || "Button"}</button>,
-  url: (props) => <a href='twitch.tv'>twitch</a>,
-  hero_banner: (props)=> <HeroBanner banner={{
-    bg_color: '#ffffff',
-    text_color: '',
-    banner_title: 'Title',
-    banner_description: 'Description',
-    call_to_action: {
-      title: 'twitch',
-      href: 'twitch.tv',
-      $: {
-        url: '',
-        title: 'tiele'
-      }
-    },
-    banner_image: {
-      filename: '',
-      url: '',
-      $: {
-        url: '',
-        title: 'tiele'
-      }
-    },
-    $: {
-      banner_title: 'Banner title',
-      banner_description: 'Description :)'
-    }
-  }}/>,
-  our_team: (props) => <TeamSection ourTeam={{
-    title_h2: 'Our Team',
-    description: 'Team Members',
-    $: {
-      title: '',
-      title_h2: '',
-      title_h3: '',
-      description: '',
-      html_code: '',
-      designation: '',
-      name: ''
-    },
-    employees: [{
-      image: {
-        filename: '',
-        url: '',
-        $: {
-          url: '',
-          title: ''
-        }
-      },
-      name: 'Your Name',
-      designation: 'Your Designation',
-      $: {
-        title: '',
-        title_h2: '',
-        title_h3: '',
-        description: '',
-        html_code: '',
-        designation: '',
-        name: ''
-      }
-    },
-    {
-      image: {
-        filename: '',
-        url: '',
-        $: {
-          url: '',
-          title: ''
-        }
-      },
-      name: 'Your Name',
-      designation: 'Your Designation',
-      $: {
-        title: '',
-        title_h2: '',
-        title_h3: '',
-        description: '',
-        html_code: '',
-        designation: '',
-        name: ''
-      }
-    }  
-  ]
-  }}/>,
-  contact_details: (props) => <></>,
-  section_with_buckets: (props) => <SectionBucket section={{
-    title_h2: '',
-    description: '',
-    buckets: [{
-      title_h3: '',
-      description: '',
-      call_to_action: {
-        title: '',
-        href: '',
-        $: {
-          url: '',
-          title: ''
-        }
-      },
-      icon: {
-        filename: '',
-        url: '',
-        $: {
-          url: '',
-          title: ''
-        }
-      },
-      $: {
-        title: '',
-        title_h2: '',
-        title_h3: '',
-        description: '',
-        html_code: '',
-        designation: '',
-        name: ''
-      }
-    }],
-    $: {
-      title: '',
-      title_h2: '',
-      title_h3: '',
-      description: '',
-      html_code: '',
-      designation: '',
-      name: ''
-    }
-  }}/>
+  url: (props) => <a href={props.content}>{props.content}</a>,
+  hero_banner: (props) => <HeroBanner banner={props.content.hero_banner}/>,
+  our_team: (props) => <TeamSection ourTeam={props.content.our_team}/>,
+  section_with_buckets: (props) => <SectionBucket section={props.content.section_with_buckets}/>,
+  section: (props) => <Section section={props.content.section}/>,
+  section_with_cards: (props) => <CardSection cards={props.content.section_with_cards}/>,
+  section_with_html_code: (props) => <SectionWithHtmlCode embedCode={props.content.section_with_html_code}/>,
+  from_blog: (props)  => <BlogSection fromBlog={props.content.from_blog}/>,
 };

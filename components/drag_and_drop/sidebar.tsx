@@ -75,32 +75,9 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
   );
 };
 
-// {contentType.schema.map((schema) => (
-//   <div key={schema.uid}>
-//     <h3>{schema.display_name} (UID: {schema.uid})</h3>
-//     {schema.blocks && schema.blocks.length > 0 ? (
-//       <div>
-//         <Dropdown blocks={schema.blocks} />
-//       </div>
-//     ) : (
-//       <p>No blocks available</p>
-//     )}
-//   </div>
-// ))}
-
 function convertContentTypeToFields(contentType: ContentType): FieldType[] {
   const fields: FieldType[] = [];
-
-  // Helper function to handle fields and nested blocks
   const processField = (field: Schema) => {
-    // Add the main field to the result array
-    fields.push({
-      id: field.uid,
-      type: field.uid,
-      title: field.display_name,
-    });
-
-    // If the field has blocks, add them as well
     if (field.data_type === "blocks" && field.blocks) {
       field.blocks.forEach((sub) =>
         fields.push({
@@ -110,9 +87,14 @@ function convertContentTypeToFields(contentType: ContentType): FieldType[] {
         })
       );
     }
+    else{
+      fields.push({
+        id: field.uid,
+        type: field.uid,
+        title: field.display_name,
+      });
+    }
   };
-
-  // Process each field in the schema
   contentType.schema.forEach(processField);
 
   return fields;

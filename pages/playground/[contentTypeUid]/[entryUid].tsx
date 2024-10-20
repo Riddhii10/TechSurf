@@ -6,20 +6,16 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-
-// import Announcements from "./announcements";
-// import Canvas, { Field } from "./canvas";
-// import Sidebar, { SidebarField } from "./sidebar";
-// import { FieldType, fields } from "./fields"; // Import fields type
-import Canvas, {Field} from "../../components/drag_and_drop/canvas";
-import Sidebar, {SidebarField} from "../../components/drag_and_drop/sidebar";
-import { FieldType,fields as initialFields } from "../../components/drag_and_drop/fields";
-import styles from '../../styles/playground.module.css'
-import Trash from "../../components/drag_and_drop/trash";
-import RightPanel from "../../components/drag_and_drop/rightpanel";
+import Canvas, {Field} from "../../../components/drag_and_drop/canvas";
+import Sidebar, {SidebarField} from "../../../components/drag_and_drop/sidebar";
+import { FieldType } from "../../../components/drag_and_drop/fields";
+import styles from '../../../styles/playground.module.css'
+import Trash from "../../../components/drag_and_drop/trash";
+import RightPanel from "../../../components/drag_and_drop/rightpanel";
 import { GetServerSideProps } from "next/types";
-import { getSpecificContentTypeRes } from "../../helper";
-import { ContentType } from "../contenttype/[uid]";
+import { getSpecificContentTypeRes, getSpecificEntry } from "../../../helper";
+import { ContentType } from "../../contenttype/[uid]";
+import { PageProps } from "../../../typescript/layout";
 
 
 // Define the structure of your data state
@@ -29,6 +25,7 @@ interface DataState {
 
 interface PlaygroundProps {
   contentType: ContentType;
+  entry: PageProps;
 }
 
 // Helper function to get data from draggable elements
@@ -45,7 +42,65 @@ function createSpacer({ id }: { id: string }): FieldType {
   };
 }
 
-export default function App({contentType}:PlaygroundProps) {
+const getInitialContentype = (entry:PageProps) : FieldType[] => {
+  console.log(entry);
+  const fields: FieldType[] = [];
+  if (entry.title) {
+    fields.push({
+      id: "title",
+      type: "text",
+      title: "Title",
+      content: entry.title
+    });
+  }
+
+  if (entry.url) {
+    fields.push({
+      id: "url",
+      type: "url",
+      title: "URL",
+      content: entry.url
+    });
+  }
+
+  // Transform page_components array if it exists
+  if (entry.page_components && Array.isArray(entry.page_components)) {
+    entry.page_components.forEach((component, index) => {
+      const componentType = Object.keys(component)[0];
+      
+      fields.push({
+        id: `${componentType}_${index}`,
+        type: componentType,
+        title: componentType.split('_').map(word => 
+          word.charAt(0).toUpperCase() + word.slice(1)
+        ).join(' '),
+        content: component
+      });
+    });
+  }
+
+  // Add other entry fields
+  Object.entries(entry).forEach(([key, value]) => {
+    if (
+      key !== 'title' && 
+      key !== 'url' && 
+      key !== 'page_components' &&
+      !key.startsWith('$') && // Skip system fields
+      typeof value !== 'object'
+    ) {
+      fields.push({
+        id: key,
+        type: typeof value === 'string' ? 'text' : 'input',
+        title: key.charAt(0).toUpperCase() + key.slice(1),
+        content: value
+      });
+    }
+  });
+
+  return fields;
+}
+
+export default function App({contentType, entry}:PlaygroundProps) {
   const [sidebarFieldsRegenKey, setSidebarFieldsRegenKey] = useState<number>(
     Date.now()
   );
@@ -54,7 +109,7 @@ export default function App({contentType}:PlaygroundProps) {
   const [activeSidebarField, setActiveSidebarField] = useState<FieldType | null>(null);
   const [activeField, setActiveField] = useState<FieldType | null>(null);
   const [selectedField, setSelectedField] = useState<FieldType | null>(null);
-
+  const initialFields = getInitialContentype(entry);
   
 
 
@@ -226,12 +281,14 @@ export default function App({contentType}:PlaygroundProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { uid } = context.query;
-  const content_type = await getSpecificContentTypeRes(uid);
+  const { contentTypeUid,entryUid } = context.query;
+  const content_type = await getSpecificContentTypeRes(contentTypeUid);
+  const entry_page = await getSpecificEntry(entryUid);
 
   return {
     props: {
       contentType: content_type,
+      entry: entry_page
     },
   };
 };

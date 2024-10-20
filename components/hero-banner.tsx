@@ -23,8 +23,9 @@ type BannerProps = {
 
 export default function HeroBanner(props: BannerProps) {
 
+  console.log(props.banner, "this is props");
   const banner = props.banner;
-
+  console.log(banner, "this is the banner props");
   return (
     <div
       className='hero-banner'

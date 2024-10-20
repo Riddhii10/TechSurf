@@ -43,7 +43,6 @@ function MyApp(props: Props) {
   };
   const blogList: any = posts?.concat(archivePost);
   return (
-    // <DndContext >
     <>
       <Head>
         <meta
@@ -57,7 +56,7 @@ function MyApp(props: Props) {
           content='width=device-width,initial-scale=1,minimum-scale=1'
         />
         <meta name='theme-color' content='#317EFB' />
-        <title>Contentstack-Nextjs-Starter-App</title>
+        <title>TechSurf</title>
         {page?.seo && page.seo.enable_search_indexing && metaData(page.seo)}
       </Head>
       <Layout

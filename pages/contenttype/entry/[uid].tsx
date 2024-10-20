@@ -1,12 +1,9 @@
 import { GetServerSideProps } from 'next';
 import { getSpecificEntry } from '../../../helper'; // A function to fetch entry by UID
+import { Entry, PageProps } from '../../../typescript/layout';
 
 interface EntryProps {
-  entry: {
-    title: string;
-    url: string;
-    page_components: any[];
-  };
+  entry: PageProps;
 }
 
 const EntryPage = ({ entry }: EntryProps) => {
