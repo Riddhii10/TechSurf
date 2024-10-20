@@ -1,6 +1,4 @@
 import React from 'react';
-// import { Component, Banner, SectionProps, SectionWithBucket, Cards, TeamProps, AdditionalParamProps, FeaturedBlogData } from './component';
-// import { Action, Image } from './action';
 import { Action, Image } from '../../typescript/action';
 import styles from '../../styles/playground.module.css';
 
@@ -17,75 +15,36 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
       </div>
     );
   }
-  console.log(selectedComponent, "this component is selected!!");
-  const handleChange = (path: string, value: any) => {
-    console.log(path,"the path");
-    console.log(value,"the value");
-    const updateNestedObject = (obj: any, path: string[], value: any): any => {
-      console.log(`Updating path: ${path.join('.')} with value: ${value}`);
-      console.log('Current object at this level:', obj);
-    
-      if (path.length === 0) return value;
-    
-      const [currentKey, ...restPath] = path;
-      
-      // Handle case when obj[currentKey] is undefined
-      const currentLevel = obj[currentKey] || (isNaN(Number(restPath[0])) ? {} : []);
-      
-      const updatedObject = Array.isArray(currentLevel) ? [...currentLevel] : { ...obj };
-    
-      if (restPath.length === 0) {
-        // We're at the leaf node, assign the value directly
-        updatedObject[currentKey] = value;
-        console.log('Updating leaf node:', { original: obj, updated: updatedObject });
-        return updatedObject;
-      }
-    
-      // Recursively update nested objects
-      updatedObject[currentKey] = updateNestedObject(currentLevel, restPath, value);
-      console.log(updatedObject[currentKey],'ek baar ye dekte hai ');
-      console.log('Returning updated object for this level:', updatedObject);
-      return updatedObject;
-    };
-    
-    
-    
-    // Create a deep copy of the selected component
-    const componentCopy = JSON.parse(JSON.stringify(selectedComponent));
-    const componentType = componentCopy.type;
-    const pathArray = path.split('.');
-    
-    // Update the content property specifically
-    if (componentCopy.content) {
-      const pathArray = path.split('.');
-      const componentType = componentCopy.type;
-      
-      // Update the nested content object
-      const updatedContent = {
-        ...componentCopy.content,
-        [componentType]: updateNestedObject(
-          componentCopy.content[componentType] || {},
-          pathArray,
-          value
-        )
-      };
 
-      console.log(updatedContent,"check this ");
-      // Create the final updated component
-      const updatedComponent = {
-        ...componentCopy,
-        content: updatedContent
-      };
-      console.log('Updated component:', componentCopy);
-      // Call the update function with the new component
-      onUpdateComponent(updatedComponent);
-    }
+  const updateNestedState = (path: string[], value: any) => {
+    // Using a functional setState to get the previous state
+    const updatedComponent = JSON.parse(JSON.stringify(selectedComponent)); // Create a deep copy of the selected component
+    console.log(updatedComponent,'before ig');
+    let current = updatedComponent;
+
+    // Navigate through the path to get to the desired key
+    path.slice(0, -1).forEach((key) => {
+      if (!current[key]) {
+        current[key] = {}; // Ensure the key exists
+      }
+      current = current[key];
+    });
+
+    console.log(current,"curr");
+    console.log(path);
+    current[path[path.length - 1]] = value; // Update the specific key
+
+    // Call the update function with the new component
+    console.log(updatedComponent,"ye update huwa hai ");
+    onUpdateComponent(updatedComponent);
   };
 
+  const handleChange = (path: string, value: any) => {
+    const pathArray = path.split('.'); // Convert the dot notation into an array
+    updateNestedState(pathArray, value);
+  };
 
-  
   const renderField = (label: string, path: string, value: any, type: string = 'text') => {
-    // console.log(type,"type u are trying to update");
     switch (type) {
       case 'text':
         return (
@@ -155,9 +114,8 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
 
   const renderComponentEditor = () => {
     const componentType = selectedComponent.type;
-    console.log(componentType, "This is component Type!!!");
     const component = selectedComponent.content[componentType];
-    console.log(component,"her is component");
+
     switch (componentType) {
       case 'hero_banner':
         return (
