@@ -15,7 +15,7 @@ export interface FieldType {
   parent?: string | null;
   placeholder?: string;
   text?: string;
-  content?: any; // Changed to any to accommodate various content types
+  content?: any;
 }
 
 // Define available field types for the sidebar

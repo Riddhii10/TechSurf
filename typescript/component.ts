@@ -117,7 +117,7 @@ export type TeamProps = {
     title_h2: string;
     description: string;
     $: AdditionalParam;
-    employees: [Employee];
+    employees: Employee[];
   }
   
 export type FeaturedBlogData = {
