@@ -19,19 +19,41 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
   }
   console.log(selectedComponent, "this component is selected!!");
   const handleChange = (path: string, value: any) => {
+    console.log(path,"the path");
+    console.log(value,"the value");
     const updateNestedObject = (obj: any, path: string[], value: any): any => {
-      const [current, ...rest] = path;
-      if (rest.length === 0) {
-        return { ...obj, [current]: value };
+      console.log(`Updating path: ${path.join('.')} with value: ${value}`);
+      console.log('Current object at this level:', obj);
+    
+      if (path.length === 0) return value;
+    
+      const [currentKey, ...restPath] = path;
+      
+      // Handle case when obj[currentKey] is undefined
+      const currentLevel = obj[currentKey] || (isNaN(Number(restPath[0])) ? {} : []);
+      
+      const updatedObject = Array.isArray(currentLevel) ? [...currentLevel] : { ...obj };
+    
+      if (restPath.length === 0) {
+        // We're at the leaf node, assign the value directly
+        updatedObject[currentKey] = value;
+        console.log('Updating leaf node:', { original: obj, updated: updatedObject });
+        return updatedObject;
       }
-      return {
-        ...obj,
-        [current]: updateNestedObject(obj[current] || {}, rest, value),
-      };
+    
+      // Recursively update nested objects
+      updatedObject[currentKey] = updateNestedObject(currentLevel, restPath, value);
+      console.log(updatedObject[currentKey],'ek baar ye dekte hai ');
+      console.log('Returning updated object for this level:', updatedObject);
+      return updatedObject;
     };
-
+    
+    
+    
     // Create a deep copy of the selected component
     const componentCopy = JSON.parse(JSON.stringify(selectedComponent));
+    const componentType = componentCopy.type;
+    const pathArray = path.split('.');
     
     // Update the content property specifically
     if (componentCopy.content) {
@@ -48,6 +70,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
         )
       };
 
+      console.log(updatedContent,"check this ");
       // Create the final updated component
       const updatedComponent = {
         ...componentCopy,
@@ -62,6 +85,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
 
   
   const renderField = (label: string, path: string, value: any, type: string = 'text') => {
+    // console.log(type,"type u are trying to update");
     switch (type) {
       case 'text':
         return (
