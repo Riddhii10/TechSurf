@@ -11,15 +11,15 @@ import {
 // import Canvas, { Field } from "./canvas";
 // import Sidebar, { SidebarField } from "./sidebar";
 // import { FieldType, fields } from "./fields"; // Import fields type
-import Canvas, {Field} from "../components/drag_and_drop/canvas";
-import Sidebar, {SidebarField} from "../components/drag_and_drop/sidebar";
-import { FieldType,fields as initialFields } from "../components/drag_and_drop/fields";
-import styles from '../styles/playground.module.css'
-import Trash from "../components/drag_and_drop/trash";
-import RightPanel from "../components/drag_and_drop/rightpanel";
-import { ContentType } from "contentstack";
+import Canvas, {Field} from "../../components/drag_and_drop/canvas";
+import Sidebar, {SidebarField} from "../../components/drag_and_drop/sidebar";
+import { FieldType,fields as initialFields } from "../../components/drag_and_drop/fields";
+import styles from '../../styles/playground.module.css'
+import Trash from "../../components/drag_and_drop/trash";
+import RightPanel from "../../components/drag_and_drop/rightpanel";
 import { GetServerSideProps } from "next/types";
-import { getSpecificContentTypeRes } from "../helper";
+import { getSpecificContentTypeRes } from "../../helper";
+import { ContentType } from "../contenttype/[uid]";
 
 
 // Define the structure of your data state
@@ -45,7 +45,7 @@ function createSpacer({ id }: { id: string }): FieldType {
   };
 }
 
-export default function App() {
+export default function App({contentType}:PlaygroundProps) {
   const [sidebarFieldsRegenKey, setSidebarFieldsRegenKey] = useState<number>(
     Date.now()
   );

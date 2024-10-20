@@ -2,20 +2,22 @@ import { useState } from "react";
 import { GetServerSideProps } from "next";
 import { getSpecificContentTypeRes } from "../../helper";
 
-interface Block {
+export interface Block {
   title: string;
   uid: string;
   schema: any[];
 }
 
-interface Schema {
+export interface Schema {
   display_name: string;
   uid: string;
+  data_type: string;
   blocks?: Block[];
 }
 
-interface ContentType {
+export interface ContentType {
   title: string;
+  
   uid: string;
   schema: Schema[];
 }

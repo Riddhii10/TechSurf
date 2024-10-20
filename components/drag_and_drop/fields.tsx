@@ -1,6 +1,7 @@
 import React from 'react';
 
 export interface FieldType {
+  [x: string]: any;
   id: string;
   title: string;
   type: string;
@@ -12,7 +13,7 @@ export interface FieldType {
 }
 
 export const fields: FieldType[] = [
-  {
+  { 
     id: "input",
     type: "input",
     title: "Text Input",
@@ -48,7 +49,7 @@ export const renderers: Record<string, React.FC<FieldType>> = {
       <option value="2">2</option>
       <option value="3">3</option>
     </select>
-  ),
+  ),    
   text: (props) => <p>{props.content || "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}</p>,
   button: (props) => <button>{props.text || "Button"}</button>,
 };

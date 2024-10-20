@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 
 import { fields, FieldType } from "./fields";
 import styles from '../../styles/playground.module.css'
+import { ContentType, Schema } from "../../pages/contenttype/[uid]";
 
 
 // Define the type for SidebarFieldProps
@@ -53,14 +54,18 @@ const DraggableSidebarField: React.FC<DraggableSidebarFieldProps> = (props) => {
   );
 };
 
+
+
 // Define the type for SidebarProps
 interface SidebarProps {
   fieldsRegKey: string;
+  contentType: ContentType;
 }
 
 const Sidebar: React.FC<SidebarProps> = (props) => {
-  const { fieldsRegKey } = props;
+  const { fieldsRegKey,contentType } = props;
 
+  const fields: FieldType[] = convertContentTypeToFields(contentType);
   return (
     <div key={fieldsRegKey} className={styles.sidebar}>
       {fields.map((f) => (
@@ -69,5 +74,48 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
     </div>
   );
 };
+
+// {contentType.schema.map((schema) => (
+//   <div key={schema.uid}>
+//     <h3>{schema.display_name} (UID: {schema.uid})</h3>
+//     {schema.blocks && schema.blocks.length > 0 ? (
+//       <div>
+//         <Dropdown blocks={schema.blocks} />
+//       </div>
+//     ) : (
+//       <p>No blocks available</p>
+//     )}
+//   </div>
+// ))}
+
+function convertContentTypeToFields(contentType: ContentType): FieldType[] {
+  const fields: FieldType[] = [];
+
+  // Helper function to handle fields and nested blocks
+  const processField = (field: Schema) => {
+    // Add the main field to the result array
+    fields.push({
+      id: field.uid,
+      type: field.uid,
+      title: field.display_name,
+    });
+
+    // If the field has blocks, add them as well
+    if (field.data_type === "blocks" && field.blocks) {
+      field.blocks.forEach((sub) =>
+        fields.push({
+          id: sub.uid,
+          type: sub.uid,
+          title: sub.title,
+        })
+      );
+    }
+  };
+
+  // Process each field in the schema
+  contentType.schema.forEach(processField);
+
+  return fields;
+}
 
 export default Sidebar;
