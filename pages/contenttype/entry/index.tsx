@@ -62,7 +62,7 @@ const PagesPage = ({
 
       {/* Main Content */}
       <main style={{ padding: '20px' }}>
-        <h2>Pages</h2>
+        <h2 className='text-red-800'>Pagesss</h2>
         {pages.length === 0 ? (
           <p>No pages available.</p>
         ) : (

@@ -27,7 +27,7 @@ interface Props {
 
 const ContentTypePage = ({ contentType }: Props) => {
   return (
-    <div>
+    <div >
       <h1>{contentType.title}</h1>
       <h2>UID: {contentType.uid}</h2>
       
