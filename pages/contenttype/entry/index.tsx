@@ -48,7 +48,7 @@ const PagesPage = ({
 
   return (
     <div className='bg-slate-200'>
-      {/* header */}
+      {/*  header  */}
       <div className='mb-4'>
         <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
           HEADER
@@ -60,13 +60,16 @@ const PagesPage = ({
             <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
           </div>
        
-          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300'>
+          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300 group'>
           <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
+
+           <div className='font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity'>
+            <span className='mt-28'>Customize your own</span>
+          </div>
         </div>
         </div>
       </div>
 
-      {/* about us  */}
       <div className='mb-4'>
         <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
           ABOUT US
@@ -78,16 +81,21 @@ const PagesPage = ({
             <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
           </div>
        
-          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300'>
+          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300 group'>
           <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
+
+           <div className='font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity'>
+            <span className='mt-28'>Customize your own</span>
+          </div>
         </div>
         </div>
       </div>
 
-{/* blogs  */}
-<div className='mb-4'>
+
+
+      <div className='mb-4'>
         <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
-          BLOGS
+          BLOG
         </div>
 
         <div className='pt-4 mx-4 flex flex-col md:flex-row gap-8'>
@@ -96,13 +104,17 @@ const PagesPage = ({
             <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
           </div>
        
-          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300'>
+          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300 group'>
           <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
+
+           <div className='font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity'>
+            <span className='mt-28'>Customize your own</span>
+          </div>
         </div>
         </div>
       </div>
 
-      {/* contact us  */}
+
       <div className='mb-4'>
         <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
           CONTACT US
@@ -114,8 +126,33 @@ const PagesPage = ({
             <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
           </div>
        
-          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300'>
+          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300 group'>
           <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
+
+           <div className='font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity'>
+            <span className='mt-28'>Customize your own</span>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div className='mb-4'>
+        <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
+          HOME
+        </div>
+
+        <div className='pt-4 mx-4 flex flex-col md:flex-row gap-8'>
+
+          <div className=''>
+            <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
+          </div>
+       
+          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300 group'>
+          <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
+
+           <div className='font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity'>
+            <span className='mt-28'>Customize your own</span>
+          </div>
         </div>
         </div>
       </div>
