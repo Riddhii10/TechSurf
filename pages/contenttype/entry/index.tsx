@@ -79,8 +79,6 @@ const PagesPage = ({
           </ul>
         )}
       </main>
-
-
       {/* Footer Component */}
       <footer style={{ padding: '20px', backgroundColor: '#f5f5f5' }}>
         <p>{footer?.copyright}</p> {/* Assuming the footer has a copyright field */}
