@@ -235,18 +235,25 @@ export default function App({contentType, entry}:PlaygroundProps) {
     setSelectedField(field);
   };
 
+   
   const handleUpdateField = (updatedField: FieldType) => {
     updateData((draft: DataState) => {
+      console.log('updating ');
       const index = draft.fields.findIndex(f => f.id === updatedField.id);
       if (index !== -1) {
-        draft.fields[index] = updatedField;
+        draft.fields[index] = {
+          ...draft.fields[index],
+          ...updatedField,
+          content: updatedField.content
+        };
+        console.log('updated draft : ', draft.fields[index]);
       }
     });
     setSelectedField(updatedField);
   };
 
   const { fields } = data;
-  console.log(JSON.stringify(fields));
+  // console.log(JSON.stringify(fields));
 
   return (
     <div className={styles.app}>
@@ -273,7 +280,7 @@ export default function App({contentType, entry}:PlaygroundProps) {
             ) : null}
             {activeField ? <Field overlay field={activeField} /> : null}
           </DragOverlay>
-          <RightPanel selectedField={selectedField} onUpdateField={handleUpdateField} />
+          <RightPanel selectedComponent={selectedField} onUpdateComponent={handleUpdateField} />
         </DndContext>
       </div>
     </div>
