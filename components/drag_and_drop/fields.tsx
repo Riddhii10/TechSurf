@@ -6,6 +6,7 @@ import Section from '../section';
 import CardSection from '../card-section';
 import SectionWithHtmlCode from '../section-with-html-code';
 import BlogSection from '../blog-section';
+import { sampleData } from '../../typescript/sampleData';
 
 export interface FieldType {
   id: string;
@@ -18,46 +19,22 @@ export interface FieldType {
   content?: any;
 }
 
-// Define available field types for the sidebar
-export const fields: FieldType[] = [
-  { 
-    id: "input",
-    type: "input",
-    title: "Text Input",
-  },
-  {
-    id: "select",
-    type: "select",
-    title: "Select",
-  },
-  {
-    id: "text",
-    type: "text",
-    title: "Text",
-  },
-  {
-    id: "button",
-    type: "button",
-    title: "Button",
-  },
-  {
-    id: "our_team",
-    type: "our_team",
-    title: "Our Team",
-  }
-];
+// Helper function to safely access nested content or return sample data
+const getContentOrSample = (props: any, path: string) => {
+  return props?.content?.[path] || sampleData.pageComponents[path]; 
+};
 
-export const renderers: Record<string, React.FC<FieldType>> = {
-  input: (props) => <input type="text" placeholder={props.placeholder || "This is a text input"} />,
-  textarea: (props) => <textarea rows={5} placeholder={props.placeholder || "This is a text area"}>{props.content}</textarea>,
-  text: (props) => <p>{props.content || "Lorem Ipsum is simply dummy text"}</p>,
-  button: (props) => <button>{props.text || "Button"}</button>,
-  url: (props) => <a href={props.content}>{props.content}</a>,
-  hero_banner: (props) => <HeroBanner banner={props.content.hero_banner}/>,
-  our_team: (props) => <TeamSection ourTeam={props.content.our_team}/>,
-  section_with_buckets: (props) => <SectionBucket section={props.content.section_with_buckets}/>,
-  section: (props) => <Section section={props.content.section}/>,
-  section_with_cards: (props) => <CardSection cards={props.content.section_with_cards.cards}/>,
-  section_with_html_code: (props) => <SectionWithHtmlCode embedCode={props.content.section_with_html_code}/>,
-  from_blog: (props)  => <BlogSection fromBlog={props.content.from_blog}/>,
+export const renderers: Record<string, (props: any) => JSX.Element> = {
+  input: (props) => {return props?.content || <input type="text" placeholder="This is a text input" />;},
+  textarea: (props) => {return props?.content || <textarea rows={5} placeholder="This is a text area" />;},
+  text: (props) => {return <p>{props?.content || "Lorem Ipsum is simply dummy text"}</p>;},
+  button: (props) => {return <button>{props?.text || "Button"}</button>;},
+  url: (props) => {return props?.content || <a href="#">Sample URL</a>;},
+  hero_banner: (props) => (<HeroBanner banner={getContentOrSample(props, 'hero_banner')} />),
+  our_team: (props) => (<TeamSection ourTeam={getContentOrSample(props, 'our_team')} />),
+  section_with_buckets: (props) => (<SectionBucket section={getContentOrSample(props, 'section_with_buckets')} />),
+  section: (props) => (<Section section={getContentOrSample(props, 'section')} />),
+  section_with_cards: (props) => (<CardSection cards={getContentOrSample(props, 'section_with_cards')} />),
+  section_with_html_code: (props) => (<SectionWithHtmlCode embedCode={getContentOrSample(props, 'section_with_html_code')} />),
+  from_blog: (props) => (<BlogSection fromBlog={getContentOrSample(props, 'from_blog')} />)
 };
