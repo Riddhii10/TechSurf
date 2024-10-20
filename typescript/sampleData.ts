@@ -14,15 +14,10 @@ export const sampleData = {
       },
       banner_image: {
         filename: "hero-banner.jpg",
-        url: "/api/placeholder/1200/600",
+        url: "https://eu-images.contentstack.com/v3/assets/blt76651d6fca0c7bd9/blt863a12a8e3f348b4/6715017a3c5c34908d766024/6f3879f3ba91deb7fdd5def4416ec48e.jpg",
         title: "Hero Banner"
       },
       text_color: "#333333",
-      $: {
-        title: "Hero Banner",
-        banner_title: "Welcome to Our Platform",
-        banner_description: "Discover amazing features"
-      }
     },
     
     our_team: {
@@ -36,16 +31,7 @@ export const sampleData = {
         },
         name: "John Doe",
         designation: "CEO",
-        $: {
-          name: "John Doe",
-          designation: "Chief Executive Officer",
-          description: "Leadership"
-        }
       }],
-      $: {
-        title_h2: "Team Section",
-        description: "Our team members"
-      }
     },
 
     section_with_buckets: {
@@ -65,15 +51,7 @@ export const sampleData = {
           url: "/api/placeholder/64/64",
           title: "Web Development"
         },
-        $: {
-          title_h3: "Web Development",
-          description: "Web services"
-        }
       }],
-      $: {
-        title: "Services",
-        description: "Our offerings"
-      }
     },
 
     section: {
@@ -89,10 +67,6 @@ export const sampleData = {
         title: "About Us Image"
       },
       image_alignment: "left",
-      $: {
-        title_h2: "About Section",
-        description: "Company information"
-      }
     },
 
     section_with_cards: {
@@ -103,10 +77,6 @@ export const sampleData = {
           title: "Learn More",
           href: "/features/1"
         },
-        $: {
-          title_h3: "Feature 1",
-          description: "Feature details"
-        }
       }]
     },
 
@@ -115,10 +85,6 @@ export const sampleData = {
       title: "Custom HTML Section",
       description: "This section contains custom HTML",
       html_code: "<div class='custom-section'><h3>Custom Content</h3><p>This is custom HTML content.</p></div>",
-      $: {
-        title: "HTML Section",
-        html_code: "Custom HTML"
-      }
     },
 
     from_blog: {
@@ -139,16 +105,7 @@ export const sampleData = {
         },
         body: "Sample blog post content...",
         url: "/blog/post-1",
-        $: {
-          title: "Blog Post 1",
-          body: "Sample content",
-          date: "2024-10-20"
-        }
       }],
-      $: {
-        title_h2: "Blog Section",
-        description: "Latest posts"
-      }
     }
   }
 };
