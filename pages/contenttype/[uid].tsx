@@ -17,7 +17,6 @@ export interface Schema {
 
 export interface ContentType {
   title: string;
-  
   uid: string;
   schema: Schema[];
 }

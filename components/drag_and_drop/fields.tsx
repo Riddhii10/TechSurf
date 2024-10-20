@@ -1,6 +1,7 @@
 import React from 'react';
 import HeroBanner from '../hero-banner';
 import TeamSection from '../team-section';
+import SectionBucket from '../section-bucket';
 
 export interface FieldType {
   [x: string]: any;
@@ -82,8 +83,8 @@ export const renderers: Record<string, React.FC<FieldType>> = {
     }
   }}/>,
   our_team: (props) => <TeamSection ourTeam={{
-    title_h2: '',
-    description: '',
+    title_h2: 'Our Team',
+    description: 'Team Members',
     $: {
       title: '',
       title_h2: '',
@@ -113,6 +114,71 @@ export const renderers: Record<string, React.FC<FieldType>> = {
         designation: '',
         name: ''
       }
-    }]
+    },
+    {
+      image: {
+        filename: '',
+        url: '',
+        $: {
+          url: '',
+          title: ''
+        }
+      },
+      name: 'Your Name',
+      designation: 'Your Designation',
+      $: {
+        title: '',
+        title_h2: '',
+        title_h3: '',
+        description: '',
+        html_code: '',
+        designation: '',
+        name: ''
+      }
+    }  
+  ]
+  }}/>,
+  contact_details: (props) => <></>,
+  section_with_buckets: (props) => <SectionBucket section={{
+    title_h2: '',
+    description: '',
+    buckets: [{
+      title_h3: '',
+      description: '',
+      call_to_action: {
+        title: '',
+        href: '',
+        $: {
+          url: '',
+          title: ''
+        }
+      },
+      icon: {
+        filename: '',
+        url: '',
+        $: {
+          url: '',
+          title: ''
+        }
+      },
+      $: {
+        title: '',
+        title_h2: '',
+        title_h3: '',
+        description: '',
+        html_code: '',
+        designation: '',
+        name: ''
+      }
+    }],
+    $: {
+      title: '',
+      title_h2: '',
+      title_h3: '',
+      description: '',
+      html_code: '',
+      designation: '',
+      name: ''
+    }
   }}/>
 };
