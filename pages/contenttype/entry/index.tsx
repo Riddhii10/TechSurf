@@ -3,7 +3,9 @@ import { getHeaderRes, getFooterRes, getAllEntries } from '../../../helper';
 import { useState } from 'react';
 import { Key, ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from 'react';
 import Link from 'next/link';
-
+import Image from 'next/image';
+// import { FaPlus } from 'react-icons/fa';
+import { CiCirclePlus } from "react-icons/ci";
 interface Page {
   uid: string;
   title: string;
@@ -45,10 +47,83 @@ const PagesPage = ({
   };
 
   return (
-    <div>
+    <div className='bg-slate-200'>
+      {/* header */}
+      <div className='mb-4'>
+        <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
+          HEADER
+        </div>
+
+        <div className='pt-4 mx-4 flex flex-col md:flex-row gap-8'>
+
+          <div className=''>
+            <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
+          </div>
+       
+          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300'>
+          <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
+        </div>
+        </div>
+      </div>
+
+      {/* about us  */}
+      <div className='mb-4'>
+        <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
+          ABOUT US
+        </div>
+
+        <div className='pt-4 mx-4 flex flex-col md:flex-row gap-8'>
+
+          <div className=''>
+            <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
+          </div>
+       
+          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300'>
+          <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
+        </div>
+        </div>
+      </div>
+
+{/* blogs  */}
+<div className='mb-4'>
+        <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
+          BLOGS
+        </div>
+
+        <div className='pt-4 mx-4 flex flex-col md:flex-row gap-8'>
+
+          <div className=''>
+            <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
+          </div>
+       
+          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300'>
+          <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
+        </div>
+        </div>
+      </div>
+
+      {/* contact us  */}
+      <div className='mb-4'>
+        <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
+          CONTACT US
+        </div>
+
+        <div className='pt-4 mx-4 flex flex-col md:flex-row gap-8'>
+
+          <div className=''>
+            <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
+          </div>
+       
+          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300'>
+          <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
+        </div>
+        </div>
+      </div>
+
+
       {/* Header Component */}
       <header style={{ padding: '20px', backgroundColor: '#f5f5f5' }}>
-        <h1>{header?.title}</h1> {/* Assuming the header has a title */}
+        <h1>hi{header?.title}</h1> {/* Assuming the header has a title */}
         <nav>
           <ul>
             {header?.navigation_menu?.map((item: { uid: Key | null | undefined; url: string | undefined; title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; }) => (
@@ -62,7 +137,7 @@ const PagesPage = ({
 
       {/* Main Content */}
       <main style={{ padding: '20px' }}>
-        <h2 className='text-red-800'>Pagessss</h2>
+        <h2 className='text-red-800'>Page</h2>
         {pages.length === 0 ? (
           <p>No pages available.</p>
         ) : (
