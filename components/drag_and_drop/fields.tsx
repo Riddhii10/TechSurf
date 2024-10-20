@@ -1,4 +1,6 @@
 import React from 'react';
+import HeroBanner from '../hero-banner';
+import TeamSection from '../team-section';
 
 export interface FieldType {
   [x: string]: any;
@@ -52,4 +54,65 @@ export const renderers: Record<string, React.FC<FieldType>> = {
   ),    
   text: (props) => <p>{props.content || "Lorem Ipsum is simply dummy text of the printing and typesetting industry."}</p>,
   button: (props) => <button>{props.text || "Button"}</button>,
+  url: (props) => <a href='twitch.tv'>twitch</a>,
+  hero_banner: (props)=> <HeroBanner banner={{
+    bg_color: '#ffffff',
+    text_color: '',
+    banner_title: 'Title',
+    banner_description: 'Description',
+    call_to_action: {
+      title: 'twitch',
+      href: 'twitch.tv',
+      $: {
+        url: '',
+        title: 'tiele'
+      }
+    },
+    banner_image: {
+      filename: '',
+      url: '',
+      $: {
+        url: '',
+        title: 'tiele'
+      }
+    },
+    $: {
+      banner_title: 'Banner title',
+      banner_description: 'Description :)'
+    }
+  }}/>,
+  our_team: (props) => <TeamSection ourTeam={{
+    title_h2: '',
+    description: '',
+    $: {
+      title: '',
+      title_h2: '',
+      title_h3: '',
+      description: '',
+      html_code: '',
+      designation: '',
+      name: ''
+    },
+    employees: [{
+      image: {
+        filename: '',
+        url: '',
+        $: {
+          url: '',
+          title: ''
+        }
+      },
+      name: 'Your Name',
+      designation: 'Your Designation',
+      $: {
+        title: '',
+        title_h2: '',
+        title_h3: '',
+        description: '',
+        html_code: '',
+        designation: '',
+        name: ''
+      }
+    }]
+  }}/>
 };
