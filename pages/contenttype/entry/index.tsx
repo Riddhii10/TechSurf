@@ -69,7 +69,7 @@ const PagesPage = ({
           <ul>
             {pages.map((page) => (
               <li key={page.uid} style={{ marginBottom: '10px' }}>
-                <Link href={`/contenttype/entry/${page.uid}`}>
+                <Link href={`/playground/page/${page.uid}`}>
                   <a style={{ textDecoration: 'none', color: 'black' }}>
                     <h3>{page.title}</h3>
                   </a>

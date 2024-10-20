@@ -57,7 +57,7 @@ export const renderers: Record<string, React.FC<FieldType>> = {
   our_team: (props) => <TeamSection ourTeam={props.content.our_team}/>,
   section_with_buckets: (props) => <SectionBucket section={props.content.section_with_buckets}/>,
   section: (props) => <Section section={props.content.section}/>,
-  section_with_cards: (props) => <CardSection cards={props.content.section_with_cards}/>,
+  section_with_cards: (props) => <CardSection cards={props.content.section_with_cards.cards}/>,
   section_with_html_code: (props) => <SectionWithHtmlCode embedCode={props.content.section_with_html_code}/>,
   from_blog: (props)  => <BlogSection fromBlog={props.content.from_blog}/>,
 };
