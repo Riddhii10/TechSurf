@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { nanoid } from "nanoid";
 
-import { fields, FieldType } from "./fields";
+import {  FieldType } from "./fields";
 import styles from '../../styles/playground.module.css'
 import { ContentType, Schema } from "../../pages/contenttype/[uid]";
 

@@ -36,5 +36,6 @@ export const renderers: Record<string, (props: any) => JSX.Element> = {
   section: (props) => (<Section section={getContentOrSample(props, 'section')} />),
   section_with_cards: (props) => (<CardSection cards={getContentOrSample(props, 'section_with_cards')} />),
   section_with_html_code: (props) => (<SectionWithHtmlCode embedCode={getContentOrSample(props, 'section_with_html_code')} />),
-  from_blog: (props) => (<BlogSection fromBlog={getContentOrSample(props, 'from_blog')} />)
+  from_blog: (props) => (<BlogSection fromBlog={getContentOrSample(props, 'from_blog')} />),
+  
 };
