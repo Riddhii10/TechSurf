@@ -1,21 +1,27 @@
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { getHeaderRes, getFooterRes, getAllEntries } from '../../../helper';
-import { useState } from 'react';
-import { Key, ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { getHeaderRes, getFooterRes, getAllEntries } from "../../../helper";
+import { useState } from "react";
+import {
+  Key,
+  ReactElement,
+  JSXElementConstructor,
+  ReactFragment,
+  ReactPortal,
+} from "react";
+import Link from "next/link";
+import Image from "next/image";
 // import { FaPlus } from 'react-icons/fa';
 import { CiCirclePlus } from "react-icons/ci";
 interface Page {
   uid: string;
   title: string;
-  url: string; 
+  url: string;
 }
 
 interface PagesPageProps {
   pages: Page[];
-  header: any; 
-  footer: any; 
+  header: any;
+  footer: any;
 }
 
 export const getStaticProps: GetStaticProps<PagesPageProps> = async () => {
@@ -28,7 +34,7 @@ export const getStaticProps: GetStaticProps<PagesPageProps> = async () => {
       props: { pages, header, footer },
     };
   } catch (error) {
-    console.error('Error fetching pages:', error);
+    console.error("Error fetching pages:", error);
     return {
       props: { pages: [], header: null, footer: null },
     };
@@ -47,154 +53,118 @@ const PagesPage = ({
   };
 
   return (
-    <div className='bg-slate-200'>
-      {/*  header  */}
-      <div className='mb-4'>
-        <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
+    <div className="bg-slate-200">
+      {/* Header */}
+      <div className="mb-4">
+        <div className="bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white">
           HEADER
         </div>
 
-        <div className='pt-4 mx-4 flex flex-col md:flex-row gap-8'>
-
-          <div className=''>
-            <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
+        <div className="pt-4 mx-4 flex flex-col md:flex-row gap-8">
+          {/* Image with Hover and Light Background */}
+          <div
+            className="flex flex-col items-center border border-gray-300 rounded-lg p-4 bg-gray-100 
+                 transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
+          >
+            <Image
+              src="/box.png"
+              alt="box"
+              width={400}
+              height={250}
+              className="rounded-3xl"
+            />
           </div>
-       
-          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300 group'>
-          <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
 
-           <div className='font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity'>
-            <span className='mt-28'>Customize your own</span>
+          {/* Customization Section with Hover Effect */}
+          <div
+            className="relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-100 group 
+                 transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
+          >
+            <CiCirclePlus className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl" />
+            <div className="font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="mt-28">Customize your own</span>
+            </div>
           </div>
-        </div>
         </div>
       </div>
 
-      <div className='mb-4'>
-        <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
-          ABOUT US
+      <div className="mb-4">
+        <div className="bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white">
+          Pages
         </div>
 
-        <div className='pt-4 mx-4 flex flex-col md:flex-row gap-8'>
-
-          <div className=''>
-            <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
-          </div>
-       
-          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300 group'>
-          <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
-
-           <div className='font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity'>
-            <span className='mt-28'>Customize your own</span>
-          </div>
-        </div>
-        </div>
-      </div>
-
-
-
-      <div className='mb-4'>
-        <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
-          BLOG
-        </div>
-
-        <div className='pt-4 mx-4 flex flex-col md:flex-row gap-8'>
-
-          <div className=''>
-            <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
-          </div>
-       
-          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300 group'>
-          <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
-
-           <div className='font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity'>
-            <span className='mt-28'>Customize your own</span>
-          </div>
-        </div>
-        </div>
-      </div>
-
-
-      <div className='mb-4'>
-        <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
-          CONTACT US
-        </div>
-
-        <div className='pt-4 mx-4 flex flex-col md:flex-row gap-8'>
-
-          <div className=''>
-            <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
-          </div>
-       
-          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300 group'>
-          <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
-
-           <div className='font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity'>
-            <span className='mt-28'>Customize your own</span>
-          </div>
-        </div>
-        </div>
-      </div>
-
-      <div className='mb-4'>
-        <div className='bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white'>
-          HOME
-        </div>
-
-        <div className='pt-4 mx-4 flex flex-col md:flex-row gap-8'>
-
-          <div className=''>
-            <Image src="/box.png" alt='box' width={400} height={250} className='rounded-3xl'/>
-          </div>
-       
-          <div className='relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-300 group'>
-          <CiCirclePlus className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl ' />
-
-           <div className='font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity'>
-            <span className='mt-28'>Customize your own</span>
-          </div>
-        </div>
-        </div>
-      </div>
-
-
-      {/* Header Component */}
-      <header style={{ padding: '20px', backgroundColor: '#f5f5f5' }}>
-        <h1>hi{header?.title}</h1> {/* Assuming the header has a title */}
-        <nav>
-          <ul>
-            {header?.navigation_menu?.map((item: { uid: Key | null | undefined; url: string | undefined; title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; }) => (
-              <li key={item.uid}>
-                <a href={item.url}>{item.title}</a> {/* Assuming navigation has title and URL */}
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </header>
-
-      {/* Main Content */}
-      <main style={{ padding: '20px' }}>
-        <h2 className='text-red-800'>Page</h2>
         {pages.length === 0 ? (
           <p>No pages available.</p>
         ) : (
-          <ul>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 p-4">
             {pages.map((page) => (
-              <li key={page.uid} style={{ marginBottom: '10px' }}>
-                <Link href={`/playground/page/${page.uid}`}>
-                  <a style={{ textDecoration: 'none', color: 'black' }}>
-                    <h3>{page.title}</h3>
-                  </a>
-                </Link>
-              </li>
+              <Link key={page.uid} href={`/playground/page/${page.uid}`}>
+                <div
+                  className="flex flex-col items-center border border-gray-300 rounded-lg p-4 bg-gray-100 
+                       transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
+                >
+                  <h3 className="mb-2 text-xl font-semibold text-center">
+                    {page.title}
+                  </h3>
+                  <Image
+                    src="/box.png"
+                    alt="box"
+                    width={400}
+                    height={250}
+                    className="rounded-3xl"
+                  />
+                </div>
+              </Link>
             ))}
-          </ul>
+
+            <div
+              className="relative w-full h-[250px] border border-4 rounded-3xl bg-gray-100 group 
+                   transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
+            >
+              <CiCirclePlus className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl" />
+              <div className="font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="mt-28">Customize your own</span>
+              </div>
+            </div>
+          </div>
         )}
-      </main>
-      {/* Footer Component */}
-      <footer style={{ padding: '20px', backgroundColor: '#f5f5f5' }}>
-        <p>{footer?.copyright}</p> {/* Assuming the footer has a copyright field */}
-      </footer>
+      </div>
+
+      {/* Header */}
+      <div className="mb-4">
+        <div className="bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-5 text-white">
+          Footer
+        </div>
+
+        <div className="pt-4 mx-4 flex flex-col md:flex-row gap-8">
+          {/* Image with Hover and Light Background */}
+          <div
+            className="flex flex-col items-center border border-gray-300 rounded-lg p-4 bg-gray-100 
+                 transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
+          >
+            <Image
+              src="/box.png"
+              alt="box"
+              width={400}
+              height={250}
+              className="rounded-3xl"
+            />
+          </div>
+
+          {/* Customization Section with Hover Effect */}
+          <div
+            className="relative w-[400px] h-[250px] border border-4 rounded-3xl bg-gray-100 group 
+                 transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
+          >
+            <CiCirclePlus className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl" />
+            <div className="font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="mt-28">Customize your own</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   );
 };
