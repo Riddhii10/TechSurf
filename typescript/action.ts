@@ -11,6 +11,7 @@ export type Action = {
 
 export type Image = {
     filename: string;
+    uid: string;
     url: string;
     $: AdditionalParam;
   }

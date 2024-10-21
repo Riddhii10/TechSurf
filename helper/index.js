@@ -176,3 +176,22 @@ export const updateEntry = async (entryUid, data) => {
   }
 };
 
+export const getImages = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/v3/assets`, {
+      headers: {
+        api_key: API_KEY,
+        access_token: DELIVERY_TOKEN,
+        authorization: MANAGEMENT_TOKEN
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error('Error updating entry:', error);
+    throw error;
+  }
+};
+
+
+
+
