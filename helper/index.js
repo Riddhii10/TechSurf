@@ -152,3 +152,27 @@ export const getSpecificEntry = async (entry_uid) =>{
   }
 };
 
+export const updateEntry = async (entryUid, data) => {
+  console.log(entryUid,data);
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/v3/content_types/page/entries/${entryUid}`,
+      {
+        entry: data
+      },
+      {
+        headers: {
+          api_key: API_KEY,
+          access_token: DELIVERY_TOKEN,
+          authorization: MANAGEMENT_TOKEN,
+          'Content-Type': 'application/json'
+        },
+      }
+    );
+    return response.data.entry;
+  } catch (error) {
+    console.error('Error updating entry:', error);
+    throw error;
+  }
+};
+

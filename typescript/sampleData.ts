@@ -15,7 +15,8 @@ export const sampleData = {
       banner_image: {
         filename: "hero-banner.jpg",
         url: "https://eu-images.contentstack.com/v3/assets/blt76651d6fca0c7bd9/blt863a12a8e3f348b4/6715017a3c5c34908d766024/6f3879f3ba91deb7fdd5def4416ec48e.jpg",
-        title: "Hero Banner"
+        title: "Hero Banner",
+        uid: "blt863a12a8e3f348b4"
       },
       text_color: "#333333",
     },
@@ -27,7 +28,8 @@ export const sampleData = {
         image: {
           filename: "employee1.jpg",
           url: "/api/placeholder/300/300",
-          title: "John Doe"
+          title: "John Doe",
+          uid: "bltc0d51168008c8e9c"
         },
         name: "John Doe",
         designation: "CEO",
@@ -49,7 +51,8 @@ export const sampleData = {
         icon: {
           filename: "web-icon.svg",
           url: "/api/placeholder/64/64",
-          title: "Web Development"
+          title: "Web Development",
+          uid: "bltf146e1ec56825d6b"
         },
       }],
     },
@@ -64,7 +67,8 @@ export const sampleData = {
       image: {
         filename: "about.jpg",
         url: "/api/placeholder/800/600",
-        title: "About Us Image"
+        title: "About Us Image",
+        uid: "bltf146e1ec56825d6b"
       },
       image_alignment: "left",
     },
@@ -101,7 +105,8 @@ export const sampleData = {
         featured_image: {
           filename: "blog1.jpg",
           url: "/api/placeholder/800/400",
-          title: "Blog Post 1"
+          title: "Blog Post 1",
+          uid: "bltf146e1ec56825d6b"
         },
         body: "Sample blog post content...",
         url: "/blog/post-1",
