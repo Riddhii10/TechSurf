@@ -82,9 +82,9 @@ const PagesPage = ({
             
             <div className="absolute top-2 right-2 flex space-x-2 ">
               <span className="text-2xl font-semibold font-serif mr-44 mt-1 text-[#6247AA]">Header</span>
-              <button className="p-1 bg-gray-200 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEdit size={30}/></button>
-              <button className="p-1 bg-gray-200 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEye size={30}/></button>
-              <button className="p-1 bg-gray-200 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaTrashAlt size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEdit size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEye size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaTrashAlt size={30}/></button>
             </div>
 
           </div>
