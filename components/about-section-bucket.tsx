@@ -37,11 +37,11 @@ type BucketProps = {
 };
 
 // Helper function to extract text from a rich text object
-const extractTextFromRichText = (node: RichTextNode): string => {
+export const extractTextFromRichText = (node: any): string => {
   if (!node.children) return '';
 
   return node.children
-    .map((child) => {
+    .map((child: any) => {
       if (typeof child === 'string') return child;
       if ('text' in child) return child.text;
       return extractTextFromRichText(child); // Recursive extraction for nested children

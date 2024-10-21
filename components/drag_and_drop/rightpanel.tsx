@@ -1,6 +1,7 @@
 import React from 'react';
 import { Action, Image } from '../../typescript/action';
 import styles from '../../styles/playground.module.css';
+import { extractTextFromRichText } from '../about-section-bucket';
 
 interface RightPanelProps {
   selectedComponent: any;
@@ -60,6 +61,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
 
   const renderField = (label: string, path: string, value: any, type: string = 'text') => {
     console.log(label,value,type, path,"description check");
+    const fieldValue = typeof value === 'object' ? extractTextFromRichText(value) : value;
     switch (type) {
       case 'text':
         return (
@@ -67,7 +69,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
             <label>{label}</label>
             <input
               type="text"
-              value={value || ''}
+              value={fieldValue || ''}
               onChange={(e) => handleChange(path, e.target.value)}
             />
           </div>
@@ -77,7 +79,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
           <div className={styles['field-container']}>
             <label>{label}</label>
             <textarea
-              value={value || ''}
+              value={fieldValue || ''}
               onChange={(e) => handleChange(path, e.target.value)}
               rows={4}
             />
@@ -89,7 +91,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
             <label>{label}</label>
             <input
               type="color"
-              value={value || '#000000'}
+              value={fieldValue || '#000000'}
               onChange={(e) => handleChange(path, e.target.value)}
             />
           </div>
@@ -99,7 +101,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
           <div className={styles['field-container']}>
             <label>{label}</label>
             <select
-              value={value || ''}
+              value={fieldValue || ''}
               onChange={(e) => handleChange(path, e.target.value)}
             >
               <option value="left">Left</option>
