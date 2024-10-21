@@ -140,7 +140,7 @@ const PagesPage = ({
             ))}
 
             <div
-              className="relative w-full h-[250px] border border-4 rounded-3xl bg-gray-100 group 
+              className="relative w-full h-[310px] border border-4 rounded-3xl bg-gray-100 group 
                    transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
             >
               <CiCirclePlus className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl" />
