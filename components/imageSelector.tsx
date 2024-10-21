@@ -48,12 +48,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
     }
   };
 
-  useEffect(() => {
-    if (isOpen) {
-      fetchImages();
-    }
-  }, [isOpen]);
-
+  
   useEffect(() => {
     // Prevent body scrolling when modal is open
     if (isOpen) {
@@ -67,6 +62,13 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
   }, [isOpen]);
 
   if (!isOpen) return null;
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchImages();
+    }
+  }, [isOpen]);
+
 
   // Sample images - replace with your actual image data
 //   const sampleImages: ImageType[] = [
@@ -155,6 +157,8 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
     </div>
   );
 };
+
+
 
 // Modified renderImageEditor function to use the new ImageSelector
 const renderImageEditor = (
