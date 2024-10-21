@@ -17,34 +17,49 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
   }
 
   const updateNestedState = (path: string[], value: any) => {
-    // Using a functional setState to get the previous state
-    const updatedComponent = JSON.parse(JSON.stringify(selectedComponent)); // Create a deep copy of the selected component
-    console.log(updatedComponent,'before ig');
-    let current = updatedComponent;
-
-    // Navigate through the path to get to the desired key
-    path.slice(0, -1).forEach((key) => {
-      if (!current[key]) {
-        current[key] = {}; // Ensure the key exists
+    const updatedComponent = {
+      ...selectedComponent,
+      content: {
+        ...selectedComponent.content,
+        [selectedComponent.type]: {
+          ...selectedComponent.content[selectedComponent.type]
+        }
+      }
+    };
+    let current = updatedComponent.content[selectedComponent.type];
+    const pathWithoutType = path[0] === selectedComponent.type ? path.slice(1) : path;
+    for (let i = 0; i < pathWithoutType.length - 1; i++) {
+      const key = pathWithoutType[i];
+      const nextKey = pathWithoutType[i + 1];
+      if (!isNaN(Number(nextKey))) {
+        if (!current[key]) {
+          current[key] = [];
+        }
+        current[key] = [...current[key]];
+      } else {
+        current[key] = { ...current[key] };
       }
       current = current[key];
-    });
-
-    console.log(current,"curr");
-    console.log(path);
-    current[path[path.length - 1]] = value; // Update the specific key
-
-    // Call the update function with the new component
-    console.log(updatedComponent,"ye update huwa hai ");
+    }
+    const lastKey = pathWithoutType[pathWithoutType.length - 1];
+    if (Array.isArray(current)) {
+      current[Number(lastKey)] = value;
+    } else {
+      current[lastKey] = value;
+    }
+    if (typeof value === 'object' && value !== null) {
+      current[lastKey] = { ...current[lastKey], ...value };
+    }
     onUpdateComponent(updatedComponent);
   };
 
   const handleChange = (path: string, value: any) => {
-    const pathArray = path.split('.'); // Convert the dot notation into an array
+    const pathArray = path.split('.');
     updateNestedState(pathArray, value);
   };
 
   const renderField = (label: string, path: string, value: any, type: string = 'text') => {
+    console.log(label,value,type,"description check");
     switch (type) {
       case 'text':
         return (
