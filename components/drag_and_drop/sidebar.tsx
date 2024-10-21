@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import {  FieldType } from "./fields";
 import styles from '../../styles/playground.module.css'
 import { ContentType, Schema } from "../../pages/contenttype/[uid]";
-
+import { RiDragDropLine } from "react-icons/ri";
 
 // Define the type for SidebarFieldProps
 interface SidebarFieldProps {
@@ -13,6 +13,7 @@ interface SidebarFieldProps {
   overlay?: boolean; // Optional prop
 }
 
+// the title text
 export const SidebarField: React.FC<SidebarFieldProps> = (props) => {
   const { field, overlay } = props;
   const { title } = field;
@@ -22,7 +23,7 @@ export const SidebarField: React.FC<SidebarFieldProps> = (props) => {
     className += ` ${styles.dragOverlay}`;
   }
   
-  return <div className={className}>{title}</div>;
+  return <div className={`${className} text-[#6247AA] font-serif text-2xl ml-2 font-semibold `}>{title}</div>;
 };
 
 // Define the type for DraggableSidebarFieldProps
@@ -46,9 +47,13 @@ const DraggableSidebarField: React.FC<DraggableSidebarFieldProps> = (props) => {
   
   return (
     <div ref={setNodeRef} className={`${styles['sidebar-field']}`} {...attributes}>
-      <div className={`${styles['sidebar-field-drag-handle']}`} {...listeners}>
-        ...
+
+      {/* drag wala */}
+      <div className={`${styles['sidebar-field-drag-handle']} `} {...listeners}>
+        {/* hi ... */}
+        <RiDragDropLine size={30}/>
       </div>
+
       <SidebarField field={field} {...rest} />
     </div>
   );

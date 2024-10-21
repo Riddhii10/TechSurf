@@ -13,20 +13,26 @@
 
 
 .sidebar {
-  width: 100px;
-  border-right: 1px solid black;
+  width: 300px;
+  border-right: 2px solid black;
+  border-left: 2px solid black ;
+  border-top: 2px solid black;
 }
 
+/* niche ka line  */
 .sidebar-field {
   all: unset;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   height: 100px;
-  width: 75px;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
   user-select: none;
-  padding: 5px;
+  padding: 5px;  
+}
+.sidebar-field:hover{
+  background-color: #c9c2e6;
+  color: white;
 }
 
 .sidebar-field-drag-handle {
