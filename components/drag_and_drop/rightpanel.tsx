@@ -9,6 +9,7 @@ interface RightPanelProps {
 }
 
 const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComponent }) => {
+  console.log(selectedComponent);
   if (!selectedComponent) {
     return (
       <div className={styles['right-panel']}>
@@ -130,6 +131,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
   );
 
   const renderComponentEditor = () => {
+    
     const componentType = selectedComponent.type;
     const component = selectedComponent.content[componentType];
 
