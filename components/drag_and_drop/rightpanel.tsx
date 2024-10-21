@@ -155,7 +155,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
             {renderField('Title', 'section.title_h2', component.title_h2)}
             {renderField('Description', 'section.description', component.description, 'textarea')}
             {renderField('Image Alignment', 'section.image_alignment', component.image_alignment, 'select')}
-            {/* {renderImageEditor(component.image, 'section.image')} */}
+            {renderImageEditor(component.image, 'section.image',handleChange)}
             {renderActionEditor(component.call_to_action, 'section.call_to_action')}
           </>
         );
@@ -172,7 +172,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
                   {renderField(`Bucket ${index + 1} Title`, `section_with_buckets.buckets.${index}.title_h3`, bucket.title_h3)}
                   {renderField(`Bucket ${index + 1} Description`, `section_with_buckets.buckets.${index}.description`, bucket.description, 'textarea')}
                   {renderActionEditor(bucket.call_to_action, `section_with_buckets.buckets.${index}.call_to_action`)}
-                  {/* {renderImageEditor(bucket.icon, `section_with_buckets.buckets.${index}.icon`)} */}
+                  {renderImageEditor(bucket.icon, `section_with_buckets.buckets.${index}.icon`,handleChange)}
                 </div>
               ))}
             </div>
@@ -199,7 +199,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
                 <div key={index} className={styles['team-member']}>
                   {renderField(`Member ${index + 1} Name`, `our_team.employees.${index}.name`, employee.name)}
                   {renderField(`Member ${index + 1} Designation`, `our_team.employees.${index}.designation`, employee.designation)}
-                  {/* {renderImageEditor(employee.image, `our_team.employees.${index}.image`)} */}
+                  {renderImageEditor(employee.image, `our_team.employees.${index}.image`,handleChange)}
                 </div>
               ))}
             </div>
@@ -217,7 +217,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
                   {renderField(`Blog ${index + 1} Title`, `from_blog.featured_blogs.${index}.title`, blog.title)}
                   {renderField(`Blog ${index + 1} Body`, `from_blog.featured_blogs.${index}.body`, blog.body, 'textarea')}
                   {renderField(`Blog ${index + 1} URL`, `from_blog.featured_blogs.${index}.url`, blog.url)}
-                  {/* {renderImageEditor(blog.featured_image, `from_blog.featured_blogs.${index}.featured_image`)} */}
+                  {renderImageEditor(blog.featured_image, `from_blog.featured_blogs.${index}.featured_image`,handleChange)}
                 </div>
               ))}
             </div>
