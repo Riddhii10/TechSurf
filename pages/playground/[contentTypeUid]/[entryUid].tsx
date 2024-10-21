@@ -346,11 +346,12 @@ export default function App({contentType, entry}:PlaygroundProps) {
             <Canvas fields={fields} onFieldSelect={handleFieldSelect}/>
           </SortableContext>
           {/* <Trash /> */}
-          <div className={styles.saveButtonContainer}>
+
+          <div className={`${styles.saveButtonContainer} `}>
               <Button 
                 onClick={handleSave}
                 disabled={isSaving}
-                className={styles.saveButton}
+                className={`${styles.saveButton} absolute bottom-0 right-20 text-xl`}
               >
                 {isSaving ? 'Saving...' : 'Save Changes'}
               </Button>
