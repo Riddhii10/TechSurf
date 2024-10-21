@@ -21,7 +21,7 @@ export const SidebarField: React.FC<SidebarFieldProps> = (props) => {
   if (overlay) {
     className += ` ${styles.dragOverlay}`;
   }
-
+  
   return <div className={className}>{title}</div>;
 };
 
