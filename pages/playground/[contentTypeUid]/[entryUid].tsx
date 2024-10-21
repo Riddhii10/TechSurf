@@ -130,7 +130,7 @@ export default function App({contentType, entry}:PlaygroundProps) {
       } else if (field.type === "url" && field.id === "url") {
         transformedData.url = field.content;
       } else if (!["text", "url"].includes(field.type)) {
-        const transformedComponent = processImagesAndKeepRest(field.content);
+        const transformedComponent = processImagesAndOmitOtherUids(field.content);
         if (isObject(transformedComponent)) {
           // Only add objects to page_components
           transformedData.page_components.push(transformedComponent);
@@ -143,23 +143,24 @@ export default function App({contentType, entry}:PlaygroundProps) {
   };
   
   // Helper function to replace image objects with UIDs and keep other fields as-is
-  const processImagesAndKeepRest = (data: any): any => {
+  const processImagesAndOmitOtherUids = (data: any): any => {
     if (Array.isArray(data)) {
-      return data
-        .map((item) => processImagesAndKeepRest(item))
-        .filter(isObject); // Ensure only objects are kept in the array
+      // Process each item in the array recursively
+      return data.map(processImagesAndOmitOtherUids);
     } else if (typeof data === "object" && data !== null) {
-      const transformed: any = {};
-      for (const key in data) {
-        if (isImageObject(data[key])) {
-          // Replace the image object with just its UID
-          transformed[key] = data[key].uid;
-        } else {
-          // Keep everything else as it is
-          transformed[key] = processImagesAndKeepRest(data[key]);
+      if (isImageObject(data)) {
+        // If it's an image object, keep only the UID
+        return data.uid;
+      } else {
+        // Otherwise, omit any 'uid' key and process recursively
+        const transformed: any = {};
+        for (const key in data) {
+          if (key !== "uid") {
+            transformed[key] = processImagesAndOmitOtherUids(data[key]);
+          }
         }
+        return transformed;
       }
-      return transformed;
     }
     return data; // Return primitive values as-is
   };
@@ -170,11 +171,11 @@ export default function App({contentType, entry}:PlaygroundProps) {
       typeof obj === "object" &&
       obj !== null &&
       "uid" in obj &&
-      "url" in obj // Basic check for an image object
+      "url" in obj &&
+      "filename" in obj // Check for essential image keys
     );
   };
   
-  // Helper function to check if a value is a valid object
   const isObject = (value: any): boolean => {
     return typeof value === "object" && value !== null && !Array.isArray(value);
   };

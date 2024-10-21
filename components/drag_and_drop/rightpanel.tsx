@@ -21,82 +21,71 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
     );
   }
 
+  
   const updateNestedState = (path: string[], value: any) => {
     const updatedComponent = {
       ...selectedComponent,
       content: {
         ...selectedComponent.content,
         [selectedComponent.type]: {
-          ...selectedComponent.content[selectedComponent.type]
-        }
-      }
+          ...selectedComponent.content[selectedComponent.type],
+        },
+      },
     };
+  
     let current = updatedComponent.content[selectedComponent.type];
+    console.log('Current Component:', current);
+  
+    // Handle path without type prefix
     const pathWithoutType = path[0] === selectedComponent.type ? path.slice(1) : path;
+  
     for (let i = 0; i < pathWithoutType.length - 1; i++) {
       const key = pathWithoutType[i];
       const nextKey = pathWithoutType[i + 1];
+  
       if (!isNaN(Number(nextKey))) {
-        if (!current[key]) {
+        // Ensure current[key] is initialized as an array
+        if (!Array.isArray(current[key])) {
           current[key] = [];
         }
-        current[key] = [...current[key]];
+        current[key] = [...current[key]]; // Clone the array to maintain immutability
       } else {
-        current[key] = { ...current[key] };
+        current[key] = { ...current[key] }; // Clone the object for immutability
       }
-      current = current[key];
+  
+      current = current[key]; // Move deeper into the structure
     }
+  
+    // Handle the last key in the path
     const lastKey = pathWithoutType[pathWithoutType.length - 1];
+  
     if (Array.isArray(current)) {
-      current[Number(lastKey)] = value;
+      current[Number(lastKey)] = value; // Update the specific index in the array
     } else {
-      current[lastKey] = value;
+      current[lastKey] = value; // Update the object property
     }
-    if (typeof value === 'object' && value !== null) {
-      current[lastKey] = { ...current[lastKey], ...value };
-    }
-    onUpdateComponent(updatedComponent);
+  
+    console.log('Updated Component:', updatedComponent);
+    onUpdateComponent(updatedComponent); // Trigger the update
   };
+  
+  
 
   const handleChange = (path: string, value: any) => {
+    console.log(path);
     const pathArray = path.split('.');
     updateNestedState(pathArray, value);
   };
 
 
   const addNewItemToArray = (path: string, currentItems: any[]) => {
-    if (currentItems.length === 0) {
-      const defaultItem = createDefaultItem(path);
-      handleChange(path, [defaultItem]);
-    } else {
-      const lastItem = JSON.parse(JSON.stringify(currentItems[currentItems.length - 1]));
-      handleChange(path, [...currentItems, lastItem]);
-    }
-  };
-
-  const createDefaultItem = (path: string) => {
-    if (path.includes('buckets')) {
-      return {
-        title_h3: '',
-        description: '',
-        call_to_action: { title: '', href: '' },
-        icon: { filename: '', uid: '' }
-      };
-    } else if (path.includes('employees')) {
-      return {
-        name: '',
-        designation: '',
-        image: { filename: '', uid: '' }
-      };
-    } else if (path.includes('featured_blogs')) {
-      return {
-        title: '',
-        body: '',
-        url: '',
-        featured_image: { filename: '', uid: '' }
-      };
-    }
-    return {};
+    const newItem = currentItems.length > 0 
+    ? { ...currentItems[currentItems.length - 1] }  // Clone the last item
+    : {};  // Fallback if the array is empty
+    console.log(newItem);
+    const newArray = [...currentItems, newItem];
+    console.log(newArray,path);
+  handleChange(path, newArray);
   };
   const renderAddButton = (path: string, items: any[]) => (
     <button
