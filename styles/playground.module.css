@@ -149,8 +149,10 @@
 .right-panel {
   padding: 1rem;
   background-color: #f8f9fa;
-  border-left: 1px solid #dee2e6;
+  border-left: 1px solid black;
+  border: 1px solid black;
   overflow-y: auto;
+  width: 350px;
 }
 
 .field-container {

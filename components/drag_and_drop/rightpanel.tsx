@@ -16,7 +16,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
   if (!selectedComponent) {
     return (
       <div className={styles['right-panel']}>
-        <p>Select a component to edit its properties</p>
+        <p className='text-2xl font-serif text-[#6247AA]'>Select a component to edit its properties</p>
       </div>
     );
   }
@@ -89,12 +89,12 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
   };
   const renderAddButton = (path: string, items: any[]) => (
     <button
-      className="w-full mt-4 p-2 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-md 
-                 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200 ease-in-out"
+      className="w-full mt-4 p-2 flex items-center justify-center border-2 border-dashed border-gray-400 rounded-md 
+                 text-gray-600 hover:bg-gray-50 hover:border-gray-400 hover:bg-[#A594F9] hover:text-white transition-colors duration-200 ease-in-out"
       onClick={() => addNewItemToArray(path, items)}
     >
       <PlusCircle className="w-5 h-5 mr-2" />
-      <span className="font-medium">Add Item</span>
+      <span className="font-xl font-semibold">Add Item</span>
     </button>
   );
 
@@ -104,44 +104,48 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
     switch (type) {
       case 'text':
         return (
-          <div className={styles['field-container']}>
-            <label>{label}</label>
+          <div className={`${styles['field-container']} `}>
+            <label className='text-2xl font-serif text-[#6247AA] font-bold underline'>{label}</label>
             <input
               type="text"
               value={fieldValue || ''}
               onChange={(e) => handleChange(path, e.target.value)}
+              className='text-xl font-serif '
             />
           </div>
         );
       case 'textarea':
         return (
           <div className={styles['field-container']}>
-            <label>{label}</label>
+            <label className='text-2xl font-serif text-[#6247AA] font-bold underline'>{label}</label>
             <textarea
               value={fieldValue || ''}
               onChange={(e) => handleChange(path, e.target.value)}
               rows={4}
+              className='text-xl font-serif '
             />
           </div>
         );
       case 'color':
         return (
           <div className={styles['field-container']}>
-            <label>{label}</label>
+            <label className='text-2xl font-serif text-[#6247AA] font-bold underline'>{label}</label>
             <input
               type="color"
               value={fieldValue || '#000000'}
               onChange={(e) => handleChange(path, e.target.value)}
+              
             />
           </div>
         );
       case 'select':
         return (
           <div className={styles['field-container']}>
-            <label>{label}</label>
+            <label className='text-2xl font-serif text-[#6247AA] font-bold underline'>{label}</label>
             <select
               value={fieldValue || ''}
               onChange={(e) => handleChange(path, e.target.value)}
+              
             >
               <option value="left">Left</option>
               <option value="right">Right</option>
@@ -235,9 +239,9 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
             {renderField('Title', 'our_team.title_h2', component.title_h2)}
             {renderField('Description', 'our_team.description', component.description, 'textarea')}
             <div className={styles['editor-section']}>
-              <h4>Team Members</h4>
+              <h4 className='text-2xl underline font-serif text-[#6247AA]'>Team Members</h4>
               {component.employees?.map((employee: any, index: number) => (
-                <div key={index} className={styles['team-member']}>
+                <div key={index} className={`${styles['team-member']}`}>
                   {renderField(`Member ${index + 1} Name`, `our_team.employees.${index}.name`, employee.name)}
                   {renderField(`Member ${index + 1} Designation`, `our_team.employees.${index}.designation`, employee.designation)}
                   {/* {renderImageEditor(employee.image, `our_team.employees.${index}.image`,handleChange)} */}
@@ -270,13 +274,13 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
         );
 
       default:
-        return <p>No editor available for this component type.</p>;
+        return <p className='text-2xl font-serif text-[#6247AA]'>No editor available for this component type.</p>;
     }
   };
 
   return (
     <div className={styles['right-panel']}>
-      <h3>Edit Component</h3>
+      <h3 className='text-center font-bold font-serif underline text-2xl mb-3'>Edit Component</h3>
       {renderComponentEditor()}
     </div>
   );
