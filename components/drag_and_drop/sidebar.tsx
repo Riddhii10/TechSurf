@@ -23,7 +23,7 @@ export const SidebarField: React.FC<SidebarFieldProps> = (props) => {
     className += ` ${styles.dragOverlay}`;
   }
   
-  return <div className={`${className} text-[#6247AA] font-serif text-2xl ml-2 font-semibold `}>{title}</div>;
+  return <div className={`${className} font-serif text-2xl ml-2 font-semibold `}>{title}</div>;
 };
 
 // Define the type for DraggableSidebarFieldProps
