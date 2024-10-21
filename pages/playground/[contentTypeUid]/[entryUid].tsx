@@ -354,7 +354,7 @@ export default function App({contentType, entry}:PlaygroundProps) {
               >
                 {isSaving ? 'Saving...' : 'Save Changes'}
               </Button>
-            </div>
+          </div>
           <DragOverlay>
             {activeSidebarField ? (
               <SidebarField overlay field={activeSidebarField} />
