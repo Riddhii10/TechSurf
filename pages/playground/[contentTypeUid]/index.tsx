@@ -6,17 +6,19 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import Canvas, {Field} from "../../../components/drag_and_drop/canvas";
-import Sidebar, {SidebarField} from "../../../components/drag_and_drop/sidebar";
+import Canvas, { Field } from "../../../components/drag_and_drop/canvas";
+import Sidebar, {
+  SidebarField,
+} from "../../../components/drag_and_drop/sidebar";
 import { FieldType } from "../../../components/drag_and_drop/fields";
-import styles from '../../../styles/playground.module.css'
+import styles from "../../../styles/playground.module.css";
 import Trash from "../../../components/drag_and_drop/trash";
 import RightPanel from "../../../components/drag_and_drop/rightpanel";
 import { GetServerSideProps } from "next/types";
 import { getSpecificContentTypeRes, getSpecificEntry } from "../../../helper";
 import { ContentType } from "../../contenttype/[uid]";
 import { PageProps } from "../../../typescript/layout";
-
+import { initializeComponent } from "../../../typescript/componentInitializer";
 
 // Define the structure of your data state
 interface DataState {
@@ -38,7 +40,7 @@ function createSpacer({ id }: { id: string }): FieldType {
   return {
     id,
     type: "spacer",
-    title: "spacer"
+    title: "spacer",
   };
 }
 
@@ -67,11 +69,11 @@ function createSpacer({ id }: { id: string }): FieldType {
 //   if (entry.page_components && Array.isArray(entry.page_components)) {
 //     entry.page_components.forEach((component, index) => {
 //       const componentType = Object.keys(component)[0];
-      
+
 //       fields.push({
 //         id: `${componentType}_${index}`,
 //         type: componentType,
-//         title: componentType.split('_').map(word => 
+//         title: componentType.split('_').map(word =>
 //           word.charAt(0).toUpperCase() + word.slice(1)
 //         ).join(' '),
 //         content: component
@@ -82,8 +84,8 @@ function createSpacer({ id }: { id: string }): FieldType {
 //   // Add other entry fields
 //   Object.entries(entry).forEach(([key, value]) => {
 //     if (
-//       key !== 'title' && 
-//       key !== 'url' && 
+//       key !== 'title' &&
+//       key !== 'url' &&
 //       key !== 'page_components' &&
 //       !key.startsWith('$') && // Skip system fields
 //       typeof value !== 'object'
@@ -100,18 +102,17 @@ function createSpacer({ id }: { id: string }): FieldType {
 //   return fields;
 // }
 
-export default function App({contentType, entry}:PlaygroundProps) {
+export default function App({ contentType, entry }: PlaygroundProps) {
   const [sidebarFieldsRegenKey, setSidebarFieldsRegenKey] = useState<number>(
     Date.now()
   );
   const spacerInsertedRef = useRef<boolean>(false);
   const currentDragFieldRef = useRef<FieldType | null>(null);
-  const [activeSidebarField, setActiveSidebarField] = useState<FieldType | null>(null);
+  const [activeSidebarField, setActiveSidebarField] =
+    useState<FieldType | null>(null);
   const [activeField, setActiveField] = useState<FieldType | null>(null);
   const [selectedField, setSelectedField] = useState<FieldType | null>(null);
-//   const initialFields = getInitialContentype(entry);
-  
-
+  //   const initialFields = getInitialContentype(entry);
 
   // Use useImmer with a defined type for the state
   const [data, updateData] = useImmer<DataState>({
@@ -133,18 +134,9 @@ export default function App({contentType, entry}:PlaygroundProps) {
 
     if (activeData.fromSidebar) {
       const { field } = activeData;
-      const { type,title, content, placeholder, text } = field;
+      const initializedComponent = initializeComponent(field.type);
       setActiveSidebarField(field);
-      currentDragFieldRef.current = {
-        id: active.id,
-        type,
-        name: `${type}${data.fields.length + 1}`,
-        title,
-        parent: null,
-        content: content,
-        placeholder: placeholder,
-        text: text
-      };
+      currentDragFieldRef.current = initializedComponent;
       return;
     }
 
@@ -159,7 +151,7 @@ export default function App({contentType, entry}:PlaygroundProps) {
 
   // Handle drag over event
   const handleDragOver = (e: any) => {
-    console.log(e,"over");
+    console.log(e, "over");
     const { active, over } = e;
     const activeData = getData(active);
 
@@ -175,7 +167,8 @@ export default function App({contentType, entry}:PlaygroundProps) {
           if (!draft.fields.length) {
             draft.fields.push(spacer);
           } else {
-            const nextIndex = overData.index > -1 ? overData.index : draft.fields.length;
+            const nextIndex =
+              overData.index > -1 ? overData.index : draft.fields.length;
             draft.fields.splice(nextIndex, 0, spacer);
           }
           spacerInsertedRef.current = true;
@@ -187,8 +180,11 @@ export default function App({contentType, entry}:PlaygroundProps) {
         spacerInsertedRef.current = false;
       } else {
         updateData((draft: DataState) => {
-          const spacerIndex = draft.fields.findIndex((f) => f.id === `${active.id}-spacer`);
-          const nextIndex = overData.index > -1 ? overData.index : draft.fields.length - 1;
+          const spacerIndex = draft.fields.findIndex(
+            (f) => f.id === `${active.id}-spacer`
+          );
+          const nextIndex =
+            overData.index > -1 ? overData.index : draft.fields.length - 1;
 
           if (nextIndex === spacerIndex) {
             return;
@@ -203,7 +199,7 @@ export default function App({contentType, entry}:PlaygroundProps) {
   // Handle drag end event
   const handleDragEnd = (e: any) => {
     const { over } = e;
-    
+
     if (!over) {
       cleanUp();
       updateData((draft: DataState) => {
@@ -220,7 +216,11 @@ export default function App({contentType, entry}:PlaygroundProps) {
       updateData((draft: DataState) => {
         const spacerIndex = draft.fields.findIndex((f) => f.type === "spacer");
         draft.fields.splice(spacerIndex, 1, nextField);
-        draft.fields = arrayMove(draft.fields, spacerIndex, overData.index || 0);
+        draft.fields = arrayMove(
+          draft.fields,
+          spacerIndex,
+          overData.index || 0
+        );
       });
     }
 
@@ -229,24 +229,22 @@ export default function App({contentType, entry}:PlaygroundProps) {
     setSelectedField(null);
   };
 
-
   const handleFieldSelect = (field: FieldType) => {
     console.log(field);
     setSelectedField(field);
   };
 
-   
   const handleUpdateField = (updatedField: FieldType) => {
     updateData((draft: DataState) => {
-      console.log('updating ');
-      const index = draft.fields.findIndex(f => f.id === updatedField.id);
+      console.log("updating ");
+      const index = draft.fields.findIndex((f) => f.id === updatedField.id);
       if (index !== -1) {
         draft.fields[index] = {
           ...draft.fields[index],
           ...updatedField,
-          content: updatedField.content
+          content: updatedField.content,
         };
-        console.log('updated draft : ', draft.fields[index]);
+        console.log("updated draft : ", draft.fields[index]);
       }
     });
     setSelectedField(updatedField);
@@ -265,22 +263,28 @@ export default function App({contentType, entry}:PlaygroundProps) {
           autoScroll
         >
           {/* <Announcements /> */}
-          <Sidebar fieldsRegKey={String(sidebarFieldsRegenKey)} contentType ={contentType}/>
+          <Sidebar
+            fieldsRegKey={String(sidebarFieldsRegenKey)}
+            contentType={contentType}
+          />
           <SortableContext
             strategy={verticalListSortingStrategy}
-            items={fields.map((f:FieldType) => f.id)}
+            items={fields.map((f: FieldType) => f.id)}
           >
-            <Canvas fields={fields} onFieldSelect={handleFieldSelect}/>
+            <Canvas fields={fields} onFieldSelect={handleFieldSelect} />
           </SortableContext>
           {/* <Trash /> */}
-          
+
           <DragOverlay>
             {activeSidebarField ? (
               <SidebarField overlay field={activeSidebarField} />
             ) : null}
             {activeField ? <Field overlay field={activeField} /> : null}
           </DragOverlay>
-          <RightPanel selectedComponent={selectedField} onUpdateComponent={handleUpdateField} />
+          <RightPanel
+            selectedComponent={selectedField}
+            onUpdateComponent={handleUpdateField}
+          />
         </DndContext>
       </div>
     </div>

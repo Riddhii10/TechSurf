@@ -182,3 +182,24 @@
   padding-left: 1rem;
   border-left: 2px solid #dee2e6;
 }
+
+.canvasContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.saveButtonContainer {
+  position: sticky;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  background: linear-gradient(to top, white 50%, transparent);
+}
+
+.saveButton {
+  min-width: 120px;
+}

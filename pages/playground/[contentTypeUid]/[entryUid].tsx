@@ -13,10 +13,12 @@ import styles from '../../../styles/playground.module.css'
 import Trash from "../../../components/drag_and_drop/trash";
 import RightPanel from "../../../components/drag_and_drop/rightpanel";
 import { GetServerSideProps } from "next/types";
-import { getSpecificContentTypeRes, getSpecificEntry } from "../../../helper";
+import { getSpecificContentTypeRes, getSpecificEntry, updateEntry } from "../../../helper";
 import { ContentType } from "../../contenttype/[uid]";
 import { PageProps } from "../../../typescript/layout";
+
 import { initializeComponent } from "../../../typescript/componentInitializer";
+import Button from "../../../components/button";
 
 
 // Define the structure of your data state
@@ -111,9 +113,72 @@ export default function App({contentType, entry}:PlaygroundProps) {
   const [activeField, setActiveField] = useState<FieldType | null>(null);
   const [selectedField, setSelectedField] = useState<FieldType | null>(null);
   const initialFields = getInitialContentype(entry);
+  const [isSaving, setIsSaving] = useState(false);
   
 
-
+  const transformFieldsToApiFormat = (fields: FieldType[]) => {
+    console.log(fields);
+    const transformedData: any = {
+      title: "",
+      url: "",
+      page_components: [],
+    };
+  
+    fields.forEach((field) => {
+      if (field.type === "text" && field.id === "title") {
+        transformedData.title = field.content;
+      } else if (field.type === "url" && field.id === "url") {
+        transformedData.url = field.content;
+      } else if (!["text", "url"].includes(field.type)) {
+        const transformedComponent = processImagesAndKeepRest(field.content);
+        if (isObject(transformedComponent)) {
+          // Only add objects to page_components
+          transformedData.page_components.push(transformedComponent);
+        }
+      }
+    });
+  
+    console.log(transformedData);
+    return transformedData;
+  };
+  
+  // Helper function to replace image objects with UIDs and keep other fields as-is
+  const processImagesAndKeepRest = (data: any): any => {
+    if (Array.isArray(data)) {
+      return data
+        .map((item) => processImagesAndKeepRest(item))
+        .filter(isObject); // Ensure only objects are kept in the array
+    } else if (typeof data === "object" && data !== null) {
+      const transformed: any = {};
+      for (const key in data) {
+        if (isImageObject(data[key])) {
+          // Replace the image object with just its UID
+          transformed[key] = data[key].uid;
+        } else {
+          // Keep everything else as it is
+          transformed[key] = processImagesAndKeepRest(data[key]);
+        }
+      }
+      return transformed;
+    }
+    return data; // Return primitive values as-is
+  };
+  
+  // Helper function to detect image objects
+  const isImageObject = (obj: any): boolean => {
+    return (
+      typeof obj === "object" &&
+      obj !== null &&
+      "uid" in obj &&
+      "url" in obj // Basic check for an image object
+    );
+  };
+  
+  // Helper function to check if a value is a valid object
+  const isObject = (value: any): boolean => {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
+  };
+  
   // Use useImmer with a defined type for the state
   const [data, updateData] = useImmer<DataState>({
     fields: initialFields,
@@ -244,6 +309,21 @@ export default function App({contentType, entry}:PlaygroundProps) {
     setSelectedField(updatedField);
   };
 
+
+  const handleSave = async () => {
+    try {
+      setIsSaving(true);
+      const transformedData = transformFieldsToApiFormat(data.fields);
+      console.log(transformedData);
+      await updateEntry(entry.uid, transformedData);
+      alert('Changes saved successfully!');
+    } catch (error) {
+      console.error('Error saving changes:', error);
+      alert('Failed to save changes. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
   const { fields } = data;
   // console.log(JSON.stringify(fields));
 
@@ -265,7 +345,15 @@ export default function App({contentType, entry}:PlaygroundProps) {
             <Canvas fields={fields} onFieldSelect={handleFieldSelect}/>
           </SortableContext>
           {/* <Trash /> */}
-          
+          <div className={styles.saveButtonContainer}>
+              <Button 
+                onClick={handleSave}
+                disabled={isSaving}
+                className={styles.saveButton}
+              >
+                {isSaving ? 'Saving...' : 'Save Changes'}
+              </Button>
+            </div>
           <DragOverlay>
             {activeSidebarField ? (
               <SidebarField overlay field={activeSidebarField} />
