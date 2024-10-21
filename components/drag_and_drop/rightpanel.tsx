@@ -2,7 +2,8 @@ import React from 'react';
 import { Action, Image } from '../../typescript/action';
 import styles from '../../styles/playground.module.css';
 import { extractTextFromRichText } from '../about-section-bucket';
-import { renderImageEditor } from '../imageSelector';
+// import { renderImageEditor } from '../imageSelector';
+import { ImageEditor, renderImageEditor } from '../imageSelector';
 
 interface RightPanelProps {
   selectedComponent: any;
@@ -155,7 +156,21 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
             {renderField('Title', 'section.title_h2', component.title_h2)}
             {renderField('Description', 'section.description', component.description, 'textarea')}
             {renderField('Image Alignment', 'section.image_alignment', component.image_alignment, 'select')}
-            {renderImageEditor(component.image, 'section.image',handleChange)}
+            {/* {renderImageEditor(component.image, 'section.image',handleChange)} */}
+            {/* <renderImageEditor image={component.image} /> */}
+            <ImageEditor image={{
+              filename: '',
+              uid: '',
+              url: '',
+              $: {
+                url: '',
+                title: undefined
+              }
+            }} path={''} handleChange={function (path: string, value: any): void {
+              throw new Error('Function not implemented.');
+            } }>
+              
+            </ImageEditor>
             {renderActionEditor(component.call_to_action, 'section.call_to_action')}
           </>
         );
