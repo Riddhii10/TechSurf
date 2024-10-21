@@ -3,7 +3,8 @@ import { Action, Image } from '../../typescript/action';
 import styles from '../../styles/playground.module.css';
 import { extractTextFromRichText } from '../about-section-bucket';
 // import { renderImageEditor } from '../imageSelector';
-import { ImageEditor, renderImageEditor } from '../imageSelector';
+import { ImageEditor } from '../imageSelector';
+import { PlusCircle } from 'lucide-react';
 
 interface RightPanelProps {
   selectedComponent: any;
@@ -61,6 +62,52 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
     const pathArray = path.split('.');
     updateNestedState(pathArray, value);
   };
+
+
+  const addNewItemToArray = (path: string, currentItems: any[]) => {
+    if (currentItems.length === 0) {
+      const defaultItem = createDefaultItem(path);
+      handleChange(path, [defaultItem]);
+    } else {
+      const lastItem = JSON.parse(JSON.stringify(currentItems[currentItems.length - 1]));
+      handleChange(path, [...currentItems, lastItem]);
+    }
+  };
+
+  const createDefaultItem = (path: string) => {
+    if (path.includes('buckets')) {
+      return {
+        title_h3: '',
+        description: '',
+        call_to_action: { title: '', href: '' },
+        icon: { filename: '', uid: '' }
+      };
+    } else if (path.includes('employees')) {
+      return {
+        name: '',
+        designation: '',
+        image: { filename: '', uid: '' }
+      };
+    } else if (path.includes('featured_blogs')) {
+      return {
+        title: '',
+        body: '',
+        url: '',
+        featured_image: { filename: '', uid: '' }
+      };
+    }
+    return {};
+  };
+  const renderAddButton = (path: string, items: any[]) => (
+    <button
+      className="w-full mt-4 p-2 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-md 
+                 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200 ease-in-out"
+      onClick={() => addNewItemToArray(path, items)}
+    >
+      <PlusCircle className="w-5 h-5 mr-2" />
+      <span className="font-medium">Add Item</span>
+    </button>
+  );
 
   const renderField = (label: string, path: string, value: any, type: string = 'text') => {
     console.log(label,value,type, path,"description check");
@@ -179,6 +226,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
                   <ImageEditor image={bucket.icon} path={`section_with_buckets.buckets.${index}.icon`} handleChange={handleChange}/>
                 </div>
               ))}
+              {renderAddButton('section_with_buckets.buckets', component.buckets || [])}
             </div>
           </>
         );
@@ -204,9 +252,10 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
                   {renderField(`Member ${index + 1} Name`, `our_team.employees.${index}.name`, employee.name)}
                   {renderField(`Member ${index + 1} Designation`, `our_team.employees.${index}.designation`, employee.designation)}
                   {/* {renderImageEditor(employee.image, `our_team.employees.${index}.image`,handleChange)} */}
-                  <ImageEditor image={component.image} path={`our_team.employees.${index}.image`} handleChange={handleChange}/>
+                  <ImageEditor image={employee.image} path={`our_team.employees.${index}.image`} handleChange={handleChange}/>
                 </div>
               ))}
+              {renderAddButton('our_team.employees', component.employees || [])}
             </div>
           </>
         );
@@ -226,6 +275,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
                   <ImageEditor image={component.image} path={`from_blog.featured_blogs.${index}.featured_image`} handleChange={handleChange}/>
                 </div>
               ))}
+               {renderAddButton('from_blog.featured_blogs', component.featured_blogs || [])}
             </div>
           </>
         );
