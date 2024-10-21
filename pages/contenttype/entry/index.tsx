@@ -83,8 +83,8 @@ const PagesPage = ({
             <div className="absolute top-2 right-2 flex space-x-2 ">
               <span className="text-2xl font-semibold font-serif mr-44 mt-1 text-[#6247AA]">Header</span>
               <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEdit size={30}/></button>
-              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEye size={30}/></button>
-              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaTrashAlt size={30}/></button>
+              <button className="p-1 bg-gray-200 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEye size={30}/></button>
+              <button className="p-1 bg-gray-200 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaTrashAlt size={30}/></button>
             </div>
 
           </div>
@@ -110,16 +110,18 @@ const PagesPage = ({
         {pages.length === 0 ? (
           <p>No pages available.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8 p-4">
             {pages.map((page) => (
               <Link key={page.uid} href={`/playground/page/${page.uid}`}>
+
+                {/* yeh edit karna h  */}
                 <div
-                  className="flex flex-col items-center border border-gray-300 rounded-lg p-4 bg-gray-100 
+                  className="relative flex flex-col items-center border border-gray-300 rounded-3xl pb-3 pt-14 bg-gray-100
                        transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
                 >
-                  <h3 className="mb-2 text-xl font-semibold text-center">
+                  {/* <h3 className="mb-2 text-xl font-semibold text-center">
                     {page.title}
-                  </h3>
+                  </h3> */}
                   <Image
                     src="/box.png"
                     alt="box"
@@ -127,6 +129,12 @@ const PagesPage = ({
                     height={250}
                     className="rounded-3xl"
                   />
+                  <div className="absolute top-2 right-16 flex space-x-2 ">
+              <span className="text-2xl font-semibold font-serif mt-1 mr-20 text-[#6247AA]">{page.title}</span>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEdit size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEye size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaTrashAlt size={30}/></button>
+            </div>
                 </div>
               </Link>
             ))}
