@@ -59,7 +59,7 @@ const RightPanel: React.FC<RightPanelProps> = ({ selectedComponent, onUpdateComp
   };
 
   const renderField = (label: string, path: string, value: any, type: string = 'text') => {
-    console.log(label,value,type,"description check");
+    console.log(label,value,type, path,"description check");
     switch (type) {
       case 'text':
         return (
