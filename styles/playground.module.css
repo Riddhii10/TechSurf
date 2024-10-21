@@ -17,6 +17,8 @@
   border-right: 2px solid black;
   border-left: 2px solid black ;
   border-top: 2px solid black;
+  margin-top: 1px;
+  margin-left: 1px;
 }
 
 /* niche ka line  */
@@ -28,10 +30,11 @@
   height: 100px;
   border-bottom: 2px solid black;
   user-select: none;
-  padding: 5px;  
+  padding: 5px; 
+  color:#6247AA; 
 }
 .sidebar-field:hover{
-  background-color: #c9c2e6;
+  background-color: #A594F9;
   color: white;
 }
 
