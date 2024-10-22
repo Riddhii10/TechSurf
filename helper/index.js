@@ -204,6 +204,7 @@ export const deleteEntry = async (content_type_uid,entryUid) => {
   try {
     const response = await axios.delete(
       `${BASE_URL}/v3/content_types/${content_type_uid}/entries/${entryUid}`,
+      
       {
         headers: {
           api_key: API_KEY,
@@ -220,6 +221,32 @@ export const deleteEntry = async (content_type_uid,entryUid) => {
   }
 };
 
+export const publishEntry = async (content_type_uid,entryUid) => {
+  try {
+    const requestBody = {
+      entry: {
+        environments: ["development"],
+        locales: ["en-us"],
+      },
+    };
+    const response = await axios.post(
+      `${BASE_URL}/v3/content_types/${content_type_uid}/entries/${entryUid}/publish`,
+      requestBody,
+      {
+        headers: {
+          api_key: API_KEY,
+          access_token: DELIVERY_TOKEN,
+          authorization: MANAGEMENT_TOKEN,
+          'Content-Type': 'application/json'
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error('Error deleting entry:', error);
+    throw error;
+  }
+};
 
 export const getImages = async () => {
   try {

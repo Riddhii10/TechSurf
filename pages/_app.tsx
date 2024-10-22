@@ -15,6 +15,7 @@ import { Props } from "../typescript/pages";
 import { DndContext } from '@dnd-kit/core';
 
 
+
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
@@ -60,7 +61,7 @@ function MyApp(props: Props) {
         <title>TechSurf</title>
         {page?.seo && page.seo.enable_search_indexing && metaData(page.seo)}
       </Head>
-      {/* <Layout
+      <Layout
         header={header}
         footer={footer}
         page={page}
@@ -69,9 +70,9 @@ function MyApp(props: Props) {
         entries={entries}
       >
         <Component {...pageProps} />
-      </Layout> */}
+      </Layout>
 
-      <Component {...pageProps} />
+      {/* <Component {...pageProps} /> */}
     </>
   );
 }

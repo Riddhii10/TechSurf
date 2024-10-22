@@ -18,6 +18,7 @@ import { GetServerSideProps } from "next/types";
 import {
   getSpecificContentTypeRes,
   getSpecificEntry,
+  publishEntry,
   updateEntry,
 } from "../../../helper";
 import { ContentType } from "../../contenttype/[uid]";
@@ -342,6 +343,7 @@ export default function App({ contentType, entry }: PlaygroundProps) {
       console.error("Error saving changes:", error);
       alert("Failed to save changes. Please try again.");
     } finally {
+      // await publishEntry(contentType.uid,entry.uid);
       setIsSaving(false);
     }
   };
