@@ -99,7 +99,7 @@ const PagesPage = ({
                  transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
           >
             <Image
-              src="/box.png"
+              src="/h1.png"
               alt="box"
               width={400}
               height={250}
@@ -150,7 +150,7 @@ const PagesPage = ({
                   </h3> */}
                   <Link key={page.uid} href={`/playground/page/${page.uid}`}>
                   <Image
-                    src="/box.png"
+                    src="/h2.jpg"
                     alt="box"
                     width={400}
                     height={250}
