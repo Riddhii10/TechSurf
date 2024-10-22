@@ -360,7 +360,7 @@ export default function App({ contentType, entry }: PlaygroundProps) {
           autoScroll
         >
           <div className="flex h-screen">
-            <div className={`${styles.customScrollbar} w-1/4 overflow-y-auto border-r-2`}>
+            <div className={`${styles.customScrollbar} pb-[70px] w-1/4 overflow-y-auto border-r-2`}>
               <Sidebar
                 fieldsRegKey={String(sidebarFieldsRegenKey)}
                 contentType={contentType}
@@ -368,8 +368,8 @@ export default function App({ contentType, entry }: PlaygroundProps) {
             </div>
 
             {/* center canvas */}
-            <div className="w-3/4 flex flex-col ">
-              <div className="flex-1 overflow-y-auto pb-24">
+            <div className="w-3/4 flex flex-col h-full">
+              <div className={`${styles.customScrollbar} flex-1 overflow-hidden pb-24`}>
                 <SortableContext
                   strategy={verticalListSortingStrategy}
                   items={fields.map((f: FieldType) => f.id)}
@@ -399,7 +399,7 @@ export default function App({ contentType, entry }: PlaygroundProps) {
               ) : null}
               {activeField ? <Field overlay field={activeField} /> : null}
             </DragOverlay>
-            <div className="w-1/4 overflow-y-auto border-l">
+            <div className={`${styles.customScrollbar} w-1/4 overflow-y-auto border-l pb-10`}>
             <RightPanel
               selectedComponent={selectedField}
               onUpdateComponent={handleUpdateField}
