@@ -59,6 +59,7 @@ const getInitialContentype = (entry: PageProps): FieldType[] => {
       type: "text",
       title: "Title",
       content: entry.title,
+      fixed: true
     });
   }
 
@@ -68,6 +69,7 @@ const getInitialContentype = (entry: PageProps): FieldType[] => {
       type: "url",
       title: "URL",
       content: entry.url,
+      fixed: true
     });
   }
 
@@ -89,22 +91,27 @@ const getInitialContentype = (entry: PageProps): FieldType[] => {
   }
 
   // Add other entry fields
-  Object.entries(entry).forEach(([key, value]) => {
-    if (
-      key !== "title" &&
-      key !== "url" &&
-      key !== "page_components" &&
-      !key.startsWith("$") && // Skip system fields
-      typeof value !== "object"
-    ) {
-      fields.push({
-        id: key,
-        type: typeof value === "string" ? "text" : "input",
-        title: key.charAt(0).toUpperCase() + key.slice(1),
-        content: value,
-      });
-    }
-  });
+  // Object.entries(entry).forEach(([key, value]) => {
+  //   if (
+  //     key !== "tags" &&
+  //     key !== "locale" &&
+  //     key !== "ACL" &&
+  //     key !== "_verison" &&
+  //     key !== "title" &&
+  //     key !== "url" &&
+  //     key !== "page_components" &&
+  //     !key.startsWith("$") && // Skip system fields
+  //     typeof value !== "object"
+  //   ) {
+  //     console.log(key,value);
+  //     fields.push({
+  //       id: key,
+  //       type: typeof value === "string" ? "text" : "input",
+  //       title: key.charAt(0).toUpperCase() + key.slice(1),
+  //       content: value,
+  //     });
+  //   }
+  // });
 
   return fields;
 };
@@ -310,7 +317,7 @@ export default function App({ contentType, entry }: PlaygroundProps) {
 
   const handleUpdateField = (updatedField: FieldType) => {
     updateData((draft: DataState) => {
-      console.log("updating ");
+      console.log("updating ", draft);
       const index = draft.fields.findIndex((f) => f.id === updatedField.id);
       if (index !== -1) {
         draft.fields[index] = {
