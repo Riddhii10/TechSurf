@@ -134,9 +134,9 @@ export const getSpecificContentTypeRes = async (content_type_uid) =>{
   }
 };
 
-export const getSpecificEntry = async (entry_uid) =>{
+export const getSpecificEntry = async (content_type_uid,entry_uid) =>{
   try{
-    const response = await axios.get(`${BASE_URL}/v3/content_types/page/entries/${entry_uid}/`, {
+    const response = await axios.get(`${BASE_URL}/v3/content_types/${content_type_uid}/entries/${entry_uid}/`, {
       headers: {
         api_key: API_KEY,
         access_token: DELIVERY_TOKEN,
@@ -152,11 +152,35 @@ export const getSpecificEntry = async (entry_uid) =>{
   }
 };
 
-export const updateEntry = async (entryUid, data) => {
+export const createEntry = async (content_type_uid,data) => { 
+  console.log(entryUid,data);
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/v3/content_types/${content_type_uid}/entries/${entryUid}`,
+      {
+        entry: data
+      },
+      {
+        headers: {
+          api_key: API_KEY,
+          access_token: DELIVERY_TOKEN,
+          authorization: MANAGEMENT_TOKEN,
+          'Content-Type': 'application/json'
+        },
+      }
+    );
+    return response.data.entry.uid; // handle what to return 
+  } catch (error) {
+    console.error('Error creating entry:', error);
+    throw error;
+  }
+};
+
+export const updateEntry = async (content_type_uid,entryUid, data) => {
   console.log(entryUid,data);
   try {
     const response = await axios.put(
-      `${BASE_URL}/v3/content_types/page/entries/${entryUid}`,
+      `${BASE_URL}/v3/content_types/${content_type_uid}/entries/${entryUid}`,
       {
         entry: data
       },
@@ -176,6 +200,27 @@ export const updateEntry = async (entryUid, data) => {
   }
 };
 
+export const deleteEntry = async (content_type_uid,entryUid) => {
+  try {
+    const response = await axios.delete(
+      `${BASE_URL}/v3/content_types/${content_type_uid}/entries/${entryUid}`,
+      {
+        headers: {
+          api_key: API_KEY,
+          access_token: DELIVERY_TOKEN,
+          authorization: MANAGEMENT_TOKEN,
+          'Content-Type': 'application/json'
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting entry:', error);
+    throw error;
+  }
+};
+
+
 export const getImages = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/v3/assets`, {
@@ -187,7 +232,7 @@ export const getImages = async () => {
     });
     return response;
   } catch (error) {
-    console.error('Error updating entry:', error);
+    console.error('Error getting images:', error);
     throw error;
   }
 };

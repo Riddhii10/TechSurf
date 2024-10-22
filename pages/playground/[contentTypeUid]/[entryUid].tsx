@@ -316,7 +316,7 @@ export default function App({contentType, entry}:PlaygroundProps) {
       setIsSaving(true);
       const transformedData = transformFieldsToApiFormat(data.fields);
       console.log(transformedData);
-      await updateEntry(entry.uid, transformedData);
+      await updateEntry(contentType.uid,entry.uid, transformedData);
       alert('Changes saved successfully!');
     } catch (error) {
       console.error('Error saving changes:', error);
@@ -372,7 +372,7 @@ export default function App({contentType, entry}:PlaygroundProps) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { contentTypeUid,entryUid } = context.query;
   const content_type = await getSpecificContentTypeRes(contentTypeUid);
-  const entry_page = await getSpecificEntry(entryUid);
+  const entry_page = await getSpecificEntry(contentTypeUid,entryUid);
 
   return {
     props: {

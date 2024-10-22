@@ -1,5 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { getHeaderRes, getFooterRes, getAllEntries } from "../../../helper";
+import { getHeaderRes, getFooterRes, getAllEntries, deleteEntry } from "../../../helper";
 import { useState } from "react";
 import {
   Key,
@@ -10,6 +10,7 @@ import {
 } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from 'next/router';
 import { CiCirclePlus } from "react-icons/ci";
 import { FaEdit, FaEye, FaTrashAlt } from "react-icons/fa";
 
@@ -48,15 +49,40 @@ const PagesPage = ({
   footer,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-
+  const [items, setItems] = useState<Page[]>(pages);
+  const [showModal, setShowModal] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const router = useRouter();
   const toggleDropdown = (uid: string) => {
     setOpenDropdown((prev) => (prev === uid ? null : uid));
   };
 
-
-  const handleClick = (action: string) => {
-    console.log(`${action} button clicked`);
+  const handlePreview = (url : string) =>{
+    router.push(`/${url}`);
   };
+
+  const handleEdit = (uid : string) => { 
+    router.push(`/playground/page/${uid}`);
+  };
+
+  const handleDelete = async (uid: string) => {
+    try {
+      const success = await deleteEntry('page',uid);
+      if (success) {
+        setItems((prevItems) => prevItems.filter((page) => page.uid !== uid));
+        setShowModal(false);
+      } else {
+        console.error("Failed to delete entry from backend.");
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+
+  const performDelete = async (uid : string) =>{
+    setDeleteId(uid);
+    setShowModal(true);
+  }
 
   return (
     <div className="bg-slate-200">
@@ -82,9 +108,9 @@ const PagesPage = ({
             
             <div className="absolute top-2 right-2 flex space-x-2 ">
               <span className="text-2xl font-semibold font-serif mr-44 mt-1 text-[#6247AA]">Header</span>
-              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEdit size={30}/></button>
-              <button className="p-1 bg-gray-200 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEye size={30}/></button>
-              <button className="p-1 bg-gray-200 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaTrashAlt size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleEdit("123456")}><FaEdit size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handlePreview("123456")}><FaEye size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleDelete("123456")}><FaTrashAlt size={30}/></button>
             </div>
 
           </div>
@@ -107,13 +133,13 @@ const PagesPage = ({
           PAGES
         </div>
 
-        {pages.length === 0 ? (
+        {items.length === 0 ? (
           <p>No pages available.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8 p-4">
-            {pages.map((page) => (
-              <Link key={page.uid} href={`/playground/page/${page.uid}`}>
-
+            {items.map((page) => (
+              // <Link key={page.uid} href={`/playground/page/${page.uid}`}>
+                <>
                 {/* yeh edit karna h  */}
                 <div
                   className="relative flex flex-col items-center border border-gray-300 rounded-3xl pb-3 pt-14 bg-gray-100
@@ -122,6 +148,7 @@ const PagesPage = ({
                   {/* <h3 className="mb-2 text-xl font-semibold text-center">
                     {page.title}
                   </h3> */}
+                  <Link key={page.uid} href={`/playground/page/${page.uid}`}>
                   <Image
                     src="/box.png"
                     alt="box"
@@ -129,14 +156,15 @@ const PagesPage = ({
                     height={250}
                     className="rounded-3xl"
                   />
+                  </Link>
                   <div className="absolute top-2 right-16 flex space-x-2 ">
               <span className="text-2xl font-semibold font-serif mt-1 mr-20 text-[#6247AA]">{page.title}</span>
-              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEdit size={30}/></button>
-              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaEye size={30}/></button>
-              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleClick("EDIT")}><FaTrashAlt size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleEdit(page.uid)}><FaEdit size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handlePreview(page.url)}><FaEye size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>performDelete(page.uid)}><FaTrashAlt size={30}/></button>
             </div>
                 </div>
-              </Link>
+              </>
             ))}
 
             <div
@@ -186,7 +214,27 @@ const PagesPage = ({
         </div>
       </div>
 
+      {showModal && deleteId && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-lg font-semibold text-gray-800">Are you sure?</h2>
+            <p className="text-gray-600 mt-2">This action cannot be undone.</p>
 
+            <div className="mt-4 flex justify-end space-x-2">
+              <button 
+                onClick={() => setShowModal(false)} 
+                className="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400">
+                Cancel
+              </button>
+              <button 
+                onClick={()=>handleDelete(deleteId)} 
+                className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
