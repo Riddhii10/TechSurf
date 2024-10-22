@@ -2,35 +2,19 @@ import React, { useState } from "react";
 import { useDroppable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
-
 import { renderers, FieldType } from "./fields";
-// import styles from '.../styles/playground.module.css'
 import styles from "../../styles/playground.module.css";
-
-// C:\Users\Acer\Desktop\project_works\test2\styles\playground.module.css
-// Define types for the field and its props
-// type FieldType = {
-//   id: string;
-//   type: string;
-//   // Add other properties based on your field structure
-// };
 
 interface FieldProps {
   field: FieldType;
-  overlay?: boolean; // Optional prop
-  [key: string]: any; // Allow any other props
+  overlay?: boolean; 
+  [key: string]: any; 
   onSelect?: (field: FieldType) => void;
   isSelected?: boolean;
   isFixed?: boolean;
 }
 
 function getRenderer(type: string) {
-  // if (type === "spacer") {
-  //   return () => {
-  //     return <div className={styles.spacer}>spacer</div>;
-  //   };
-  // }
-
   return renderers[type] || (() => <div>No renderer found for {type}</div>);
 }
 
