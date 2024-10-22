@@ -35,8 +35,8 @@ export default function ProductsPage({ourProduct}: {ourProduct:ProductProps}) {
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {ourProduct.products.map((product) => (
-          <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
+        {ourProduct.products.map((product,index) => (
+          <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105" key={index}>
           {product.product_image && (
             <div className="aspect-video overflow-hidden">
               <img

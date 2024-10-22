@@ -464,7 +464,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
                 </div>
                 
               ))}
-              {renderAddButton("our_product.product", component.products || [])}
+              {renderAddButton("our_product.products", component.products || [])}
             </div>
           </>
         );

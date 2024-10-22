@@ -71,36 +71,6 @@ export const sampleData = {
           product_description: "product description ",
           product_price: 1500
         },
-        {
-          image:{
-            "uid": "blta40dd13ff6965586",
-            "filename": "modern-cloud-ecosystem.svg",
-            "url": "https://eu-images.contentstack.com/v3/assets/blt76651d6fca0c7bd9/blta40dd13ff6965586/670a09a212df9eb579ac3f25/modern-cloud-ecosystem.svg",
-            "title": "Modern Cloud Ecosystem",
-          },
-          product_description: "product description ",
-          product_price: 1500
-        },
-        {
-          image:{
-            "uid": "blta40dd13ff6965586",
-            "filename": "modern-cloud-ecosystem.svg",
-            "url": "https://eu-images.contentstack.com/v3/assets/blt76651d6fca0c7bd9/blta40dd13ff6965586/670a09a212df9eb579ac3f25/modern-cloud-ecosystem.svg",
-            "title": "Modern Cloud Ecosystem",
-          },
-          product_description: "product description ",
-          product_price: 1500
-        },
-        {
-          image:{
-            "uid": "blta40dd13ff6965586",
-            "filename": "modern-cloud-ecosystem.svg",
-            "url": "https://eu-images.contentstack.com/v3/assets/blt76651d6fca0c7bd9/blta40dd13ff6965586/670a09a212df9eb579ac3f25/modern-cloud-ecosystem.svg",
-            "title": "Modern Cloud Ecosystem",
-          },
-          product_description: "product description ",
-          product_price: 1500
-        },
       ],
     },
 

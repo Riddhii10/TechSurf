@@ -90,7 +90,7 @@ export default function RenderComponents(props: RenderProps) {
           return (
             <ProductsPage
             ourProduct={component.our_product}
-              key={`component-${key}`}
+            key={`component-${key}`}
             />
           );
         }
