@@ -60,7 +60,7 @@ function MyApp(props: Props) {
         <title>TechSurf</title>
         {page?.seo && page.seo.enable_search_indexing && metaData(page.seo)}
       </Head>
-      {/* <Layout
+      <Layout
         header={header}
         footer={footer}
         page={page}
@@ -69,9 +69,9 @@ function MyApp(props: Props) {
         entries={entries}
       >
         <Component {...pageProps} />
-      </Layout> */}
+      </Layout>
 
-      <Component {...pageProps} />
+      {/* <Component {...pageProps} /> */}
     </>
   );
 }

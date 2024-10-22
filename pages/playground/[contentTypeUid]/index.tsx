@@ -15,10 +15,11 @@ import styles from "../../../styles/playground.module.css";
 import Trash from "../../../components/drag_and_drop/trash";
 import RightPanel from "../../../components/drag_and_drop/rightpanel";
 import { GetServerSideProps } from "next/types";
-import { createEntry, getSpecificContentTypeRes, getSpecificEntry } from "../../../helper";
+import { createEntry, getSpecificContentTypeRes, getSpecificEntry, publishEntry } from "../../../helper";
 import { ContentType } from "../../contenttype/[uid]";
 import { PageProps } from "../../../typescript/layout";
 import { initializeComponent } from "../../../typescript/componentInitializer";
+import { useRouter } from "next/router";
 
 // Define the structure of your data state
 interface DataState {
@@ -117,7 +118,7 @@ const setInitialContenttype = ():FieldType[] =>{
       id: "url",
       type: "url",
       title: "Sample URL",
-      content: "/home", 
+      content: "/newroute", 
       fixed: true
     });
   
@@ -134,7 +135,7 @@ export default function App({ contentType, entry }: PlaygroundProps) {
   const [activeField, setActiveField] = useState<FieldType | null>(null);
   const [selectedField, setSelectedField] = useState<FieldType | null>(null);
   const initialFields = setInitialContenttype();
-
+  const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
   const [data, updateData] = useImmer<DataState>({
     fields: initialFields,
@@ -345,14 +346,20 @@ export default function App({ contentType, entry }: PlaygroundProps) {
       const transformedData = transformFieldsToApiFormat(data.fields);
       console.log(transformedData);
       const response = await createEntry(contentType.uid, transformedData);
-      
-      alert("Changes saved successfully!");
+      const savedEntryUid = response.data?.uid;
+      if (savedEntryUid) {
+        alert("Changes saved successfully!");
+        // const r = await publishEntry(contentType.uid,savedEntryUid);
+        // console.log(r);
+        router.push(`/playground/${contentType.uid}/${savedEntryUid}`);
+      } else {
+        throw new Error("UID not found in the response.");
+      }
     } catch (error) {
       console.error("Error saving changes:", error);
       alert("Failed to save changes. Please try again.");
     } finally {
       setIsSaving(false);
-      
     }
   };
   const { fields } = data;
