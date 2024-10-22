@@ -351,7 +351,7 @@ export default function App({ contentType, entry }: PlaygroundProps) {
           autoScroll
         >
           <div className="flex h-screen">
-            <div className="w-1/4 overflow-y-auto border-r">
+            <div className={`${styles.customScrollbar} w-1/4 overflow-y-auto border-r-2`}>
               <Sidebar
                 fieldsRegKey={String(sidebarFieldsRegenKey)}
                 contentType={contentType}

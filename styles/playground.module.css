@@ -1,4 +1,27 @@
 /* playground.module.css */
+
+.customScrollbar::-webkit-scrollbar {
+  width: 8px; /* Adjust the scrollbar width */
+}
+
+.customScrollbar::-webkit-scrollbar-thumb {
+  background-color: blue; /* Set the thumb color */
+  border-radius: 10px; /* Optionally make the scrollbar thumb rounded */
+  height: 3px;
+}
+
+.customScrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: darkblue; /* Set a darker blue on hover */
+}
+
+/* Firefox support */
+.customScrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #dbd7f3 transparent; /* Blue thumb with transparent track */
+  /* padding-top: 50px; */
+}
+
+
 .app {
   font-family: sans-serif;
   display: flex;  /* Keep it as flex to allow children to be side by side */
@@ -14,9 +37,9 @@
 
 .sidebar {
   width: 300px;
-  border-right: 2px solid black;
-  border-left: 2px solid black ;
-  border-top: 2px solid black;
+  border-right: 2px solid #6247AA;
+  border-left: 2px solid #6247AA ;
+  border-top: 2px solid #6247AA;
   margin-top: 1px;
   margin-left: 1px;
 }
@@ -28,7 +51,7 @@
   align-items: center;
   /* justify-content: center; */
   height: 100px;
-  border-bottom: 2px solid black;
+  border-bottom: 2px dashed black ;
   user-select: none;
   padding: 5px; 
   color:#6247AA; 
