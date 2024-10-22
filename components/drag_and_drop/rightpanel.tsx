@@ -110,7 +110,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
   const renderAddButton = (path: string, items: any[]) => (
     <button
       className="w-full mt-4 p-2 flex items-center justify-center border-2 border-dashed border-gray-400 rounded-md 
-                 text-gray-600 hover:bg-gray-50 hover:border-gray-400 hover:bg-[#A594F9] hover:text-white transition-colors duration-200 ease-in-out"
+                 text-gray-600 hover:border-gray-400 hover:bg-[#A594F9] hover:text-white transition-colors duration-200 ease-in-out"
       onClick={() => addNewItemToArray(path, items)}
     >
       <PlusCircle className="w-5 h-5 mr-2" />
@@ -179,6 +179,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
             <select
               value={fieldValue || ""}
               onChange={(e) => handleChange(path, e.target.value)}
+              className="font-serif text-xl"
             >
               <option value="left">Left</option>
               <option value="right">Right</option>
