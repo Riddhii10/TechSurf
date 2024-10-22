@@ -181,19 +181,59 @@ const PagesPage = ({
       </div>
 
       {/* footer */}
-      <div className="mb-4 ">
-        <div className="bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-4 text-white rounded-xl ml-5">
+      <div className="mb-4 pt-5">
+        <div className="bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-4 text-white rounded-xl ml-5 ">
           FOOTER
         </div>
 
         <div className="pt-4 mx-4 flex flex-col md:flex-row gap-8">
           {/* Image with Hover and Light Background */}
           <div
+            className="relative flex flex-col items-center border border-gray-300 rounded-3xl px-4 pt-14 bg-gray-100 
+                 transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
+          >
+            <Image
+              src="/f1.png"
+              alt="box"
+              width={400}
+              height={250}
+              className="rounded-3xl"
+            />
+            
+            <div className="absolute top-2 right-2 flex space-x-2 ">
+              <span className="text-2xl font-semibold font-serif mr-44 mt-1 text-[#6247AA]">Footer</span>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleEdit("123456")}><FaEdit size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handlePreview("123456")}><FaEye size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleDelete("123456")}><FaTrashAlt size={30}/></button>
+            </div>
+
+          </div>
+
+          {/* Customization Section with Hover Effect */}
+          <div
+            className="relative w-[450px] h-[320px] border border-4 rounded-3xl bg-gray-100 group 
+                 transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
+          > 
+            <CiCirclePlus className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl" />
+            <div className="font-serif absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="mt-28">Customize your own</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <div className="mb-4 ">
+        <div className="bg-gradient-to-tr from-[#A594F9] to-[#6247AA] text-3xl leading-6 p-2 font-serif font-normal px-4 text-white rounded-xl ml-5">
+          FOOTER
+        </div>
+
+        <div className="pt-4 mx-4 flex flex-col md:flex-row gap-8">
+          {/* Image with Hover and Light Background */}
+          {/* <div
             className="flex flex-col items-center border border-gray-300 rounded-lg p-4 bg-gray-100 
                  transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
           >
             <Image
-              src="/box.png"
+              src="/f1.png"
               alt="box"
               width={400}
               height={250}
@@ -202,7 +242,7 @@ const PagesPage = ({
           </div>
 
           {/* Customization Section with Hover Effect */}
-          <div
+          {/* <div
             className="relative w-[400px] h-[300px] border border-4 rounded-3xl bg-gray-100 group 
                  transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
           >
@@ -212,7 +252,7 @@ const PagesPage = ({
             </div>
           </div>
         </div>
-      </div>
+      </div> */} 
 
       {showModal && deleteId && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
