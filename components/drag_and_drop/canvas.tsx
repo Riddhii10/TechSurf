@@ -25,11 +25,11 @@ interface FieldProps {
 }
 
 function getRenderer(type: string) {
-  if (type === "spacer") {
-    return () => {
-      return <div className={styles.spacer}>spacer</div>;
-    };
-  }
+  // if (type === "spacer") {
+  //   return () => {
+  //     return <div className={styles.spacer}>spacer</div>;
+  //   };
+  // }
 
   return renderers[type] || (() => <div>No renderer found for {type}</div>);
 }
@@ -67,6 +67,7 @@ export const Field: React.FC<FieldProps> = (props) => {
   );
 };
 
+Field.displayName = "Field";
 interface SortableFieldProps {
   id: string;
   index: number;
@@ -79,18 +80,7 @@ interface SortableFieldProps {
 const SortableField: React.FC<SortableFieldProps> = (props) => {
   const { id, index, field, onSelect, isSelected, isFixed } = props;
   // const [isDragging, setIsDragging] = useState(false);
-  if (isFixed) {
-    return (
-      <div className={`${styles.sortableField} ${styles.fixedField}`}>
-        <Field
-          field={field}
-          onSelect={onSelect}
-          isSelected={isSelected}
-          isFixed={true}
-        />
-      </div>
-    );
-  }
+  
   const {
     attributes,
     listeners,
@@ -112,6 +102,19 @@ const SortableField: React.FC<SortableFieldProps> = (props) => {
     transition,
     opacity: isDragging ? 0.5 : 1,
   };
+
+  if (isFixed) {
+    return (
+      <div className={`${styles.sortableField} ${styles.fixedField}`}>
+        <Field
+          field={field}
+          onSelect={onSelect}
+          isSelected={isSelected}
+          isFixed={true}
+        />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -156,7 +159,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
     <div ref={setNodeRef} className={styles.canvas}>
       <div className={`${styles["canvas-fields-container"]}`}>
       {fields?.map((f, i) => (
-          <SortableField key={f.id} id={f.id} field={f} index={i} onSelect={handleFieldSelect} isSelected={f.id == selectedField} isFixed={f.fixed}/>
+          <SortableField key={f.id} id={f.id} field={f} index={i} onSelect={handleFieldSelect} isSelected={f.id == selectedField} isFixed={!!f.fixed}/>
         ))}
       </div>
     </div>

@@ -13,6 +13,7 @@ import Image from "next/image";
 import { useRouter } from 'next/router';
 import { CiCirclePlus } from "react-icons/ci";
 import { FaEdit, FaEye, FaTrashAlt } from "react-icons/fa";
+import React from "react";
 
 interface Page {
   uid: string;
@@ -98,16 +99,12 @@ const PagesPage = ({
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8 p-4">
             {items.map((page) => (
-              // <Link key={page.uid} href={`/playground/page/${page.uid}`}>
-                <>
-                {/* yeh edit karna h  */}
+                // <React.Fragment key={page.uid+"-reactfrag"}>
                 <div
                   className="relative flex flex-col items-center border border-gray-300 rounded-3xl pb-3 pt-14 bg-gray-100
                        transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer"
+                       key={page.uid+"firstdiv"}
                 >
-                  {/* <h3 className="mb-2 text-xl font-semibold text-center">
-                    {page.title}
-                  </h3> */}
                   <Link key={page.uid} href={`/playground/page/${page.uid}`}>
                   <Image
                     src="/h2.jpg"
@@ -115,16 +112,19 @@ const PagesPage = ({
                     width={400}
                     height={250}
                     className="rounded-3xl"
+                    key={page.uid+"img"}
                   />
                   </Link>
-                  <div className="absolute top-2 right-16 flex space-x-2 ">
-              <span className="text-2xl font-semibold font-serif mt-1 mr-20 text-[#6247AA]">{page.title}</span>
-              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleEdit(page.uid)}><FaEdit size={30}/></button>
-              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handlePreview(page.url)}><FaEye size={30}/></button>
-              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>performDelete(page.uid)}><FaTrashAlt size={30}/></button>
+                  <div className="absolute top-2 right-16 flex space-x-2 " key={page.uid+"seconddiv"} >
+              <span className="text-2xl font-semibold font-serif mt-1 mr-20 text-[#6247AA]" key={page.uid+"span"}>{page.title}</span>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handleEdit(page.uid)} key={page.uid+"edit"}><FaEdit size={30}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>handlePreview(page.url)}><FaEye size={30} key={page.uid+"prev"}/></button>
+              <button className="p-1 rounded-full hover:bg-gray-300" onClick={()=>performDelete(page.uid)}><FaTrashAlt size={30} key={page.uid+"del"}/></button>
             </div>
                 </div>
-              </>
+              
+              // </React.Fragment>
+
             ))}
 
             <div

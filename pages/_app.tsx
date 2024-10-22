@@ -37,25 +37,25 @@ function MyApp(props: Props) {
     return noLayoutRoutes.includes(router.pathname);
   } 
 
-  const metaData = (seo: any) => {
-    const metaArr = [];
-    for (const key in seo) {
-      if (seo.enable_search_indexing) {
-        metaArr.push(
-          <meta
-            name={
-              key.includes('meta_')
-                ? key.split('meta_')[1].toString()
-                : key.toString()
-            }
-            content={seo[key].toString()}
-            key={key}
-          />
-        );
-      }
-    }
-    return metaArr;
-  };
+  // const metaData = (seo: any) => {
+  //   const metaArr = [];
+  //   for (const key in seo) {
+  //     if (seo.enable_search_indexing) {
+  //       metaArr.push(
+  //         <meta
+  //           name={
+  //             key.includes('meta_')
+  //               ? key.split('meta_')[1].toString()
+  //               : key.toString()
+  //           }
+  //           content={seo[key].toString()}
+  //           key={key}
+  //         />
+  //       );
+  //     }
+  //   }
+  //   return metaArr;
+  // };
   const blogList: any = posts?.concat(archivePost);
   return (
     <>
@@ -72,7 +72,7 @@ function MyApp(props: Props) {
         />
         <meta name='theme-color' content='#317EFB' />
         <title>TechSurf</title>
-        {page?.seo && page.seo.enable_search_indexing && metaData(page.seo)}
+        {/* {page?.seo && page.seo.enable_search_indexing && metaData(page.seo)} */}
       </Head>
       {isNoLayoutRoute() ? (
         <Component {...pageProps} />

@@ -24,6 +24,7 @@ export interface FieldType {
 
 // Helper function to safely access nested content or return sample data
 const getContentOrSample = (props: any, path: string) => {
+  const something = props.content.someProperty;
   return props?.content?.[path] || sampleData.pageComponents[path];
 };
 
