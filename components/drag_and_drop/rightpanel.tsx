@@ -98,6 +98,7 @@ const RightPanel: React.FC<RightPanelProps> = ({
   };
 
   const addNewItemToArray = (path: string, currentItems: any[]) => {
+    console.log(currentItems);
     const newItem =
       currentItems.length > 0
         ? { ...currentItems[currentItems.length - 1] } // Clone the last item
@@ -187,6 +188,22 @@ const RightPanel: React.FC<RightPanelProps> = ({
             </select>
           </div>
         );
+
+      case "number": 
+        return (
+          <div className={styles["field-container"]}>
+            <label className="text-2xl font-serif text-[#6247AA] font-bold underline">
+              {label}
+            </label>
+            <input
+              type="number"
+              value={fieldValue || ""}
+              onChange={(e) => handleChange(path, parseFloat(e.target.value))}
+              className="text-xl font-serif "
+            />
+          </div>
+        );
+  
     }
   };
 
@@ -397,9 +414,57 @@ const RightPanel: React.FC<RightPanelProps> = ({
                     path={`our_team.employees.${index}.image`}
                     handleChange={handleChange}
                   />
+                  
                 </div>
               ))}
               {renderAddButton("our_team.employees", component.employees || [])}
+            </div>
+          </>
+        );
+
+      case "our_product":
+        return (
+          <>
+          {renderField("Title", "our_product.product_category", component.product_category)}
+          {renderField(
+              "Description",
+              "our_product.category_description",
+              component.category_description,
+              "textarea"
+            )}
+          <div className={styles["editor-section"]}>
+              <h4 className="text-2xl underline font-serif text-[#6247AA]">
+                Team Members
+              </h4>
+              {component.products?.map((product: any, index: number) => (
+                <div key={index} className={`${styles["team-member"]}`}>
+                  {renderField(
+                    `product ${index + 1} Name`,
+                    `our_product.products.${index}.product_name`,
+                    product.product_name
+                  )}
+                  {renderField(
+                    `product ${index + 1} Description`,
+                    `our_product.products.${index}.product_description`,
+                    product.product_description
+                  )}
+                  
+                  {/* {renderImageEditor(employee.image, `our_team.employees.${index}.image`,handleChange)} */}
+                  <ImageEditor
+                    image={product.product_image}
+                    path={`our_product.products.${index}.product_image`}
+                    handleChange={handleChange}
+                  />
+                {renderField(
+                  `product ${index + 1} Price`,
+                  `our_product.products.${index}.product_price`,
+                  product.product_price,
+                  "number"
+                )}
+                </div>
+                
+              ))}
+              {renderAddButton("our_product.product", component.products || [])}
             </div>
           </>
         );

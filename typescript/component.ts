@@ -12,6 +12,9 @@ type AdditionalParam = {
   html_code: string;
   body: string;
   date: string;
+  product_name: string;
+  product_description: string;
+  product_price: string;
 }
 
 type Employee = {
@@ -20,6 +23,15 @@ type Employee = {
   designation: string;
   $: AdditionalParam;
 }
+
+type Product = {
+  product_name: string;
+  product_image: Image;
+  product_description: string;
+  product_price: number;
+  $?: AdditionalParam;
+}
+
 
 type BucketList = [
   BucketArray:{
@@ -72,6 +84,7 @@ export type Component = {
   section_with_html_code?: AdditionalParamProps;
   our_team?: TeamProps;
   widget?: Widget;
+  our_product?: ProductProps;
 }
 
 export type SectionWithBucket = {
@@ -119,6 +132,13 @@ export type TeamProps = {
     $: AdditionalParam;
     employees: Employee[];
   }
+
+export type ProductProps = {
+    product_category: string;
+    category_description: string;
+    $: AdditionalParam;
+    products: Product[];
+}
   
 export type FeaturedBlogData = {
     title_h2: string;

@@ -346,12 +346,13 @@ export default function App({ contentType, entry }: PlaygroundProps) {
       const transformedData = transformFieldsToApiFormat(data.fields);
       console.log(transformedData);
       const response = await createEntry(contentType.uid, transformedData);
-      const savedEntryUid = response.data?.uid;
+      console.log(response)
+      const savedEntryUid = response.data?.entry.uid;
       if (savedEntryUid) {
         alert("Changes saved successfully!");
         // const r = await publishEntry(contentType.uid,savedEntryUid);
         // console.log(r);
-        router.push(`/playground/${contentType.uid}/${savedEntryUid}`);
+        // router.push(`/playground/${contentType.uid}/${savedEntryUid}`);
       } else {
         throw new Error("UID not found in the response.");
       }
@@ -375,7 +376,7 @@ export default function App({ contentType, entry }: PlaygroundProps) {
           autoScroll
         >
           <div className="flex h-screen">
-            <div className="w-1/4 overflow-y-auto border-r">
+            <div className={`${styles.customScrollbar} pb-[70px] w-1/4 overflow-y-auto border-r-2`}>
               <Sidebar
                 fieldsRegKey={String(sidebarFieldsRegenKey)}
                 contentType={contentType}
@@ -383,8 +384,8 @@ export default function App({ contentType, entry }: PlaygroundProps) {
             </div>
 
             {/* center canvas */}
-            <div className="w-3/4 flex flex-col ">
-              <div className="flex-1 overflow-y-auto pb-24">
+            <div className="w-3/4 flex flex-col h-full">
+              <div className={`${styles.customScrollbar} flex-1 overflow-hidden pb-24`}>
                 <SortableContext
                   strategy={verticalListSortingStrategy}
                   items={fields.map((f: FieldType) => f.id)}
@@ -414,7 +415,7 @@ export default function App({ contentType, entry }: PlaygroundProps) {
               ) : null}
               {activeField ? <Field overlay field={activeField} /> : null}
             </DragOverlay>
-            <div className="w-1/4 overflow-y-auto border-l">
+            <div className={`${styles.customScrollbar} w-1/4 overflow-y-auto border-l pb-10`}>
             <RightPanel
               selectedComponent={selectedField}
               onUpdateComponent={handleUpdateField}

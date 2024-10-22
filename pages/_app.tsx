@@ -1,6 +1,6 @@
 import App from 'next/app';
 import Head from 'next/head';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import NProgress from 'nprogress';
 import Layout from '../components/layout';
 import { getHeaderRes, getFooterRes, getAllEntries } from '../helper';
@@ -22,7 +22,20 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp(props: Props) {
   const { Component, pageProps, header, footer, entries } = props;
-  const { page, posts, archivePost, blogPost } = pageProps;
+  const { page, posts, archivePost, blogPost,} = pageProps;
+
+  const router = useRouter();
+
+  // Static and dynamic routes where the layout should be hidden
+  const noLayoutRoutes = ['/playground/[contentTypeUid]/[entryUid]', '/contenttype/entry', '/playground/[contentTypeUid]'];
+  // const noLayoutDynamicRoutes = [/^\/playground\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+$/];
+
+  // Check if the route is in the no-layout routes
+  const isNoLayoutRoute = () => {
+    console.log(router.pathname);
+    console.log(noLayoutRoutes.includes(router.pathname));
+    return noLayoutRoutes.includes(router.pathname);
+  } 
 
   const metaData = (seo: any) => {
     const metaArr = [];
@@ -61,18 +74,20 @@ function MyApp(props: Props) {
         <title>TechSurf</title>
         {page?.seo && page.seo.enable_search_indexing && metaData(page.seo)}
       </Head>
-      <Layout
-        header={header}
-        footer={footer}
-        page={page}
-        blogPost={blogPost}
-        blogList={blogList}
-        entries={entries}
-      >
+      {isNoLayoutRoute() ? (
         <Component {...pageProps} />
-      </Layout>
-
-      {/* <Component {...pageProps} /> */}
+      ) : (
+        <Layout
+          header={header}
+          footer={footer}
+          page={page}
+          blogPost={blogPost}
+          blogList={blogList}
+          entries={entries}
+        >
+          <Component {...pageProps} />
+        </Layout>
+      )}
     </>
   );
 }

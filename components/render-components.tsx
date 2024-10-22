@@ -10,9 +10,11 @@ import SectionBucket from './section-bucket';
 import AboutSectionBucket from './about-section-bucket';
 import SectionWithHtmlCode from './section-with-html-code';
 import { RenderProps } from "../typescript/component";
+import ProductsPage from './product';
 
 export default function RenderComponents(props: RenderProps) {
   const { pageComponents, blogPost, entryUid, contentTypeUid, locale } = props;
+  console.log(pageComponents,"the page components");
   return (
     <div
       data-pageref={entryUid}
@@ -79,6 +81,15 @@ export default function RenderComponents(props: RenderProps) {
           return (
             <TeamSection
               ourTeam={component.our_team}
+              key={`component-${key}`}
+            />
+          );
+        }
+
+        if (component.our_product){
+          return (
+            <ProductsPage
+            ourProduct={component.our_product}
               key={`component-${key}`}
             />
           );

@@ -169,7 +169,7 @@ export const createEntry = async (content_type_uid,data) => {
         },
       }
     );
-    return response.data.entry.uid; // handle what to return 
+    return response; // handle what to return 
   } catch (error) {
     console.error('Error creating entry:', error);
     throw error;

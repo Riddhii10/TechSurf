@@ -8,6 +8,7 @@ import SectionWithHtmlCode from "../section-with-html-code";
 import BlogSection from "../blog-section";
 import { sampleData } from "../../typescript/sampleData";
 import AboutSectionBucket from "../about-section-bucket";
+import ProductsPage from "../product";
 
 export interface FieldType {
   id: string;
@@ -74,5 +75,8 @@ export const renderers: Record<string, (props: any) => JSX.Element> = {
   ),
   from_blog: (props) => (
     <BlogSection fromBlog={getContentOrSample(props, "from_blog")} />
+  ),
+  our_product: (props) => (
+    <ProductsPage ourProduct={getContentOrSample(props, "our_product")} />
   ),
 };

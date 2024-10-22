@@ -10,6 +10,7 @@ export type Action = {
   }
 
 export type Image = {
+    title: string;
     filename: string;
     uid: string;
     url: string;
