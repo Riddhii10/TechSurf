@@ -359,7 +359,7 @@ export default function App({ contentType, entry }: PlaygroundProps) {
             </div>
 
             {/* center canvas */}
-            <div className="w-1/2 flex flex-col relative">
+            <div className="w-3/4 flex flex-col ">
               <div className="flex-1 overflow-y-auto pb-24">
                 <SortableContext
                   strategy={verticalListSortingStrategy}
@@ -370,7 +370,7 @@ export default function App({ contentType, entry }: PlaygroundProps) {
               </div>
               {/* <Trash /> */}
 
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t">
+              <div className="absolute bottom-0 left-0 right-0 p-2 bg-white border-t">
             <div className="flex justify-center">
                 <button
                   onClick={handleSave}
