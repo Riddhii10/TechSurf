@@ -18,6 +18,6 @@
     "noEmitOnError": true, // Ensure this is set to true to avoid emitting files on errors
     "noImplicitAny": false // Setting this to false allows variables and parameters to have implicit 'any'
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "/.ts", "/.tsx"],
   "exclude": ["node_modules","components/drag_and_drop/fields.tsx","components/drag_and_drop/canvas.tsx"]
 }
