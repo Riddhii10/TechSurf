@@ -83,6 +83,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 function convertContentTypeToFields(contentType: ContentType): FieldType[] {
   const fields: FieldType[] = [];
   const processField = (field: Schema) => {
+    console.log(field);
     if (field.data_type === "blocks" && field.blocks) {
       field.blocks.forEach((sub) =>
         fields.push({
@@ -92,7 +93,7 @@ function convertContentTypeToFields(contentType: ContentType): FieldType[] {
         })
       );
     }
-    else{
+    else if(field.data_type !== "text"){
       fields.push({
         id: field.uid,
         type: field.uid,

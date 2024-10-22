@@ -18,6 +18,7 @@ export interface FieldType {
   placeholder?: string;
   text?: string;
   content?: any;
+  fixed? :boolean | null;
 }
 
 // Helper function to safely access nested content or return sample data
@@ -64,7 +65,7 @@ export const renderers: Record<string, (props: any) => JSX.Element> = {
     <Section section={getContentOrSample(props, "section")} />
   ),
   section_with_cards: (props) => (
-    <CardSection cards={getContentOrSample(props, "section_with_cards")} />
+    <CardSection cards={getContentOrSample(props, "section_with_cards.cards")} />
   ),
   section_with_html_code: (props) => (
     <SectionWithHtmlCode

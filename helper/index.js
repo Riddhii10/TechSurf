@@ -153,10 +153,10 @@ export const getSpecificEntry = async (content_type_uid,entry_uid) =>{
 };
 
 export const createEntry = async (content_type_uid,data) => { 
-  console.log(entryUid,data);
+  console.log(data);
   try {
     const response = await axios.post(
-      `${BASE_URL}/v3/content_types/${content_type_uid}/entries/${entryUid}`,
+      `${BASE_URL}/v3/content_types/${content_type_uid}/entries/`,
       {
         entry: data
       },

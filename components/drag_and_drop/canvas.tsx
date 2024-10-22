@@ -5,7 +5,7 @@ import { useSortable } from "@dnd-kit/sortable";
 
 import { renderers, FieldType } from "./fields";
 // import styles from '.../styles/playground.module.css'
-import styles from '../../styles/playground.module.css'
+import styles from "../../styles/playground.module.css";
 
 // C:\Users\Acer\Desktop\project_works\test2\styles\playground.module.css
 // Define types for the field and its props
@@ -21,6 +21,7 @@ interface FieldProps {
   [key: string]: any; // Allow any other props
   onSelect?: (field: FieldType) => void;
   isSelected?: boolean;
+  isFixed?: boolean;
 }
 
 function getRenderer(type: string) {
@@ -34,7 +35,7 @@ function getRenderer(type: string) {
 }
 
 export const Field: React.FC<FieldProps> = (props) => {
-  const { field, overlay, isSelected, onSelect, ...rest } = props;
+  const { field, overlay, isSelected, onSelect, isFixed, ...rest } = props;
   const { type } = field;
 
   const Component = getRenderer(type);
@@ -43,12 +44,15 @@ export const Field: React.FC<FieldProps> = (props) => {
   if (overlay) {
     className += ` ${styles.dragOverlay}`;
   }
-  if(isSelected){
+  if (isSelected) {
     className += ` ${styles.selectedField}`;
+  }
+  if (isFixed) {
+    className += ` ${styles.fixedField}`;
   }
 
   const handleClick = (e: React.PointerEvent) => {
-    console.log('clicked');
+    console.log("clicked");
     console.log(e);
     e.stopPropagation();
     if (onSelect) {
@@ -69,12 +73,24 @@ interface SortableFieldProps {
   field: FieldType;
   onSelect: (field: FieldType) => void;
   isSelected: boolean;
+  isFixed: boolean;
 }
 
 const SortableField: React.FC<SortableFieldProps> = (props) => {
-  const { id, index, field, onSelect, isSelected } = props;
+  const { id, index, field, onSelect, isSelected, isFixed } = props;
   // const [isDragging, setIsDragging] = useState(false);
-
+  if (isFixed) {
+    return (
+      <div className={`${styles.sortableField} ${styles.fixedField}`}>
+        <Field
+          field={field}
+          onSelect={onSelect}
+          isSelected={isSelected}
+          isFixed={true}
+        />
+      </div>
+    );
+  }
   const {
     attributes,
     listeners,
@@ -98,14 +114,14 @@ const SortableField: React.FC<SortableFieldProps> = (props) => {
   };
 
   return (
-    <div 
-      ref={setNodeRef} 
-      style={style} 
-      {...attributes} 
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
       {...listeners}
       className={styles.sortableField}
     >
-      <Field field={field} onSelect={onSelect} isSelected={isSelected}/>
+      <Field field={field} onSelect={onSelect} isSelected={isSelected} />
     </div>
   );
 };
@@ -131,16 +147,16 @@ const Canvas: React.FC<CanvasProps> = (props) => {
     setSelectedField(field.id); // Update selected field
     onFieldSelect(field);
   };
-//   const style = {
-//     transform: CSS.Transform.toString(transform),
-//     transition,
-//   };
+  //   const style = {
+  //     transform: CSS.Transform.toString(transform),
+  //     transition,
+  //   };
 
   return (
     <div ref={setNodeRef} className={styles.canvas}>
-      <div className={`${styles['canvas-fields-container']}`}>
-        {fields?.map((f, i) => (
-          <SortableField key={f.id} id={f.id} field={f} index={i} onSelect={handleFieldSelect} isSelected={f.id==selectedField}/>
+      <div className={`${styles["canvas-fields-container"]}`}>
+      {fields?.map((f, i) => (
+          <SortableField key={f.id} id={f.id} field={f} index={i} onSelect={handleFieldSelect} isSelected={f.id == selectedField} isFixed={f.fixed}/>
         ))}
       </div>
     </div>

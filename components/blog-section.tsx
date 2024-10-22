@@ -40,7 +40,7 @@ type FeaturedBlogProps = {
 export default function BlogSection(props: FeaturedBlogProps) {
 
   const fromBlog = props.fromBlog;
-
+  console.log(fromBlog,"the blog");
   return (
     <div className='community-section'>
       <div className='community-head'>
